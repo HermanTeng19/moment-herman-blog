@@ -9,6 +9,13 @@ body {
   font-family: var(--font-noto-sans-sc);
   background-color: #fdfcfb;
   color: #4a4a4a;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark theme styles */
+body.dark {
+  background-color: #090a0f;
+  color: #e5e7eb;
 }
 
 h1, h2, h3, h4, .font-serif {

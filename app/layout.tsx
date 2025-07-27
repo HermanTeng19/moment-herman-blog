@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_SC, Noto_Serif_SC } from "next/font/google";
 import "./globals.css";
+import ThemeWrapper from "./components/ThemeWrapper";
 
 const notoSansSC = Noto_Sans_SC({
   variable: "--font-noto-sans-sc",
@@ -29,7 +30,9 @@ export default function RootLayout({
       <body
         className={`${notoSansSC.variable} ${notoSerifSC.variable} bg-[#fdfcfb] text-stone-700 antialiased`}
       >
-        {children}
+        <ThemeWrapper>
+          {children}
+        </ThemeWrapper>
       </body>
     </html>
   );
