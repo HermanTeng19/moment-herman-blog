@@ -1,6 +1,7 @@
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PostCard from './components/PostCard';
+import OrigamiBackground from './components/OrigamiBackground';
 import { getAllPosts } from './lib/posts';
 
 export default function Home() {
@@ -8,7 +9,9 @@ export default function Home() {
   const latestPosts = posts.slice(0, 3);
 
   return (
-    <div className="container mx-auto max-w-6xl px-4 sm:px-8">
+    <>
+      <OrigamiBackground />
+      <div className="container mx-auto max-w-6xl px-4 sm:px-8 relative z-10">
       <Header />
       
       <main>
@@ -49,5 +52,6 @@ export default function Home() {
 
       <Footer />
     </div>
+    </>
   );
 }
