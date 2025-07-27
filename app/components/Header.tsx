@@ -2,12 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import ThemeToggle from './ThemeToggle';
-import { useTheme } from '../lib/useTheme';
 
 export default function Header() {
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
 
   const navItems = [
     { href: '/', label: '首页', id: 'nav-home' },
@@ -22,7 +19,7 @@ export default function Header() {
         {/* Site Title */}
         <Link 
           href="/" 
-          className="font-serif text-2xl tracking-widest text-stone-800 dark:text-stone-200 transition-colors duration-300 hover:text-stone-500 dark:hover:text-stone-400"
+          className="font-serif text-2xl tracking-widest text-stone-800 transition-colors duration-300 hover:text-stone-500"
         >
           隙间光
         </Link>
@@ -34,13 +31,12 @@ export default function Header() {
               key={item.href}
               href={item.href}
               className={`nav-link transition-colors duration-300 ${
-                pathname === item.href ? 'active-link text-stone-800 dark:text-stone-200' : 'text-stone-600 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200'
+                pathname === item.href ? 'active-link text-stone-800' : 'text-stone-600 hover:text-stone-800'
               }`}
             >
               {item.label}
             </Link>
           ))}
-          <ThemeToggle theme={theme} setTheme={setTheme} />
         </nav>
       </div>
     </header>
