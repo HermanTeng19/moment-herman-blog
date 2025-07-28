@@ -81,11 +81,22 @@ export default function Home() {
         >
           <div className="absolute inset-0 bg-black/40"></div>
           <div className="relative z-10 px-4">
+            <style jsx>{`
+              @keyframes blink {
+                0% { opacity: 1; }
+                50% { opacity: 0; }
+                100% { opacity: 1; }
+              }
+              .fast-blink {
+                animation: blink 0.5s infinite;
+              }
+            `}</style>
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl leading-tight text-white drop-shadow-md relative">
               {animatedTitle}
               {isFinished && showBlinkingCursor && (
-                <span className="ml-2 inline-block h-1 w-10 animate-pulse bg-white align-bottom"></span>
-              )}
+                <span className="ml-2 inline-block h-0.5 w-8 fast-blink bg-white align-bottom"></span>
+              )
+              }
             </h1>
             <p className="mt-6 text-base max-w-prose leading-relaxed text-stone-200 drop-shadow-md text-center mx-auto">
               光影、尘埃、裂纹、静默。这里记录着那些不完美却充满诗意的瞬间，以及对生活本质的朴素思考。
