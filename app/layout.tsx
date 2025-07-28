@@ -15,8 +15,8 @@ const notoSerifSC = Noto_Serif_SC({
 });
 
 export const metadata: Metadata = {
-  title: "隙间光 | Komorebi",
-  description: "于无常之中，寻觅须臾之美。光影、尘埃、裂纹、静默。这里记录着那些不完美却充满诗意的瞬间，以及对生活本质的朴素思考。",
+  title: "云舒亭小站",
+  description: "于无常之中，寻觅须臾之美。光影、尘埃、裂纹、静默。一个情绪寄托的港湾，这里记录着那些不完美却充满诗意的瞬间，以及对生活本质的朴素思考。",
 };
 
 export default function RootLayout({

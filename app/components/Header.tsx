@@ -21,7 +21,7 @@ export default function Header() {
           href="/" 
           className="font-serif text-2xl tracking-widest text-stone-800 transition-colors duration-300 hover:text-stone-500"
         >
-          隙间光
+          云舒亭
         </Link>
         
         {/* Navigation */}
