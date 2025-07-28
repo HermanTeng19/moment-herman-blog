@@ -90,6 +90,25 @@ export default function Home() {
               .fast-blink {
                 animation: blink 0.5s infinite;
               }
+              @keyframes wave {
+                0% {
+                  transform: translateX(0%);
+                }
+                100% {
+                  transform: translateX(-100%);
+                }
+              }
+              .preview-parallax {
+                animation: wave 10s ease-in-out infinite;
+              }
+              .preview-parallax:nth-child(2) {
+                animation-duration: 12s;
+                animation-delay: -2s;
+              }
+              .preview-parallax:nth-child(3) {
+                animation-duration: 8s;
+                animation-delay: -4s;
+              }
             `}</style>
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl leading-tight text-white drop-shadow-md relative">
               {animatedTitle}
@@ -101,6 +120,37 @@ export default function Home() {
             <p className="mt-6 text-base max-w-prose leading-relaxed text-stone-200 drop-shadow-md text-center mx-auto">
               光影、尘埃、裂纹、静默。这里记录着那些不完美却充满诗意的瞬间，以及对生活本质的朴素思考。
             </p>
+          </div>
+          
+          {/* Animated Wave SVG */}
+          <div className="absolute bottom-0 left-0 w-full overflow-hidden">
+            <svg
+              className="relative block w-[calc(100%+1.3px)] h-[60px]"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              viewBox="0 24 150 28"
+              preserveAspectRatio="none"
+              shapeRendering="auto"
+            >
+              <defs>
+                <path
+                  id="gentle-wave"
+                  d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+                />
+              </defs>
+              <g className="preview-parallax">
+                <use xlinkHref="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
+              </g>
+              <g className="preview-parallax">
+                <use xlinkHref="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+              </g>
+              <g className="preview-parallax">
+                <use xlinkHref="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+              </g>
+              <g className="preview-parallax">
+                <use xlinkHref="#gentle-wave" x="48" y="7" fill="#fff" />
+              </g>
+            </svg>
           </div>
         </section>
 
