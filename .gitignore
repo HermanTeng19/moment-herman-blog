@@ -42,3 +42,6 @@ next-env.d.ts
 
 # prototype files
 /prototype/
+
+# hexo blog
+/hexo-blog-moments/
