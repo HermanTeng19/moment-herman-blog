@@ -33,23 +33,23 @@ export default function Header() {
     }`}>
       <div className="container mx-auto max-w-6xl px-4 sm:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Site Title */}
-          <Link 
-            href="/" 
+        {/* Site Title */}
+        <Link 
+          href="/" 
             className={`font-serif text-xl sm:text-2xl tracking-widest transition-colors duration-300 hover:text-stone-500 ${
               isScrolled ? 'text-stone-800' : 'text-white'
             }`}
-          >
-            云舒亭
-          </Link>
-          
+        >
+          云舒亭
+        </Link>
+        
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6 sm:space-x-10 text-sm tracking-wider">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`nav-link transition-colors duration-300 ${
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`nav-link transition-colors duration-300 ${
                   pathname === item.href 
                     ? (isScrolled ? 'text-stone-800' : 'text-white') 
                     : (isScrolled ? 'text-stone-600 hover:text-stone-800' : 'text-white/80 hover:text-white')
@@ -86,12 +86,12 @@ export default function Header() {
                     pathname === item.href 
                       ? 'text-stone-800 bg-stone-100' 
                       : 'text-stone-600 hover:text-stone-800 hover:bg-stone-50'
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
           </div>
         )}
       </div>
