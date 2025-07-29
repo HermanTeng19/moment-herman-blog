@@ -39,13 +39,20 @@ const useTypewriter = (text: string, speed: number = 100) => {
 
 export default function Home() {
   const posts = getAllPosts();
-  const latestPosts = posts.slice(0, 3);
   const [heroTitle, setHeroTitle] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 9; // 3x3 grid
 
   const textToAnimate = heroTitle.endsWith('。') ? heroTitle.slice(0, -1) : heroTitle;
   const showBlinkingCursor = heroTitle.endsWith('。');
 
   const { displayText: animatedTitle, isFinished } = useTypewriter(textToAnimate, 100);
+
+  // Calculate pagination
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPages = Math.ceil(posts.length / postsPerPage);
 
   useEffect(() => {
     const fetchQuote = async () => {
@@ -64,108 +71,178 @@ export default function Home() {
     fetchQuote();
   }, []);
 
+  const scrollToContainer = () => {
+    const container = document.getElementById('container');
+    if (container) {
+      container.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <OrigamiBackground />
-      <div className="relative z-10">
-        <div className="container mx-auto max-w-6xl px-4 sm:px-8">
-          <Header />
-        </div>
+      
+      {/* Transparent Header */}
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <Header />
       </div>
       
       <main>
-        {/* Hero Section */}
-        <section 
-          className="relative h-[60vh] sm:h-[70vh] flex items-center justify-center text-center bg-cover bg-center"
-          style={{ backgroundImage: "url('https://picsum.photos/1920/1080')" }}
-        >
-          <div className="absolute inset-0 bg-black/40"></div>
-          <div className="relative z-10 px-4">
+        {/* Hero Section - Full Screen */}
+        <div className="preview relative h-screen">
+          <div 
+            className="preview-image absolute inset-0 bg-cover bg-center bg-fixed"
+            style={{ backgroundImage: "url('https://picsum.photos/1920/1080')" }}
+          >
+            <div className="absolute inset-0 bg-black/40"></div>
+            
+            {/* Wave Overlay */}
+            <div className="preview-overlay absolute bottom-0 left-0 right-0 z-10">
+              <svg
+                className="preview-waves relative block w-[calc(100%+1.3px)] h-[15vh] min-h-[100px] max-h-[150px]"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+                viewBox="0 24 150 28"
+                preserveAspectRatio="none"
+                shapeRendering="auto"
+              >
+                <defs>
+                  <path
+                    id="gentle-wave"
+                    d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+                  />
+                </defs>
+                <g className="preview-parallax">
+                  <use xlinkHref="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
+                  <use xlinkHref="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+                  <use xlinkHref="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+                  <use xlinkHref="#gentle-wave" x="48" y="7" fill="#fff" />
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          {/* Hero Content */}
+          <div className="preview-motto-wrapper absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 text-center">
             <style jsx>{`
               @keyframes blink {
                 0% { opacity: 1; }
                 50% { opacity: 0; }
                 100% { opacity: 1; }
               }
-              .fast-blink {
-                animation: blink 0.5s infinite;
+              .preview-cursor {
+                animation: blink 0.7s infinite;
               }
-              @keyframes wave {
+              @keyframes move-forever {
                 0% {
-                  transform: translateX(0%);
+                  transform: translate3d(-90px, 0, 0);
                 }
                 100% {
-                  transform: translateX(-100%);
+                  transform: translate3d(85px, 0, 0);
                 }
               }
-              .preview-parallax {
-                animation: wave 10s ease-in-out infinite;
+              .preview-parallax > use {
+                animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
               }
-              .preview-parallax:nth-child(2) {
-                animation-duration: 12s;
+              .preview-parallax > use:nth-child(1) {
                 animation-delay: -2s;
+                animation-duration: 7s;
               }
-              .preview-parallax:nth-child(3) {
-                animation-duration: 8s;
+              .preview-parallax > use:nth-child(2) {
+                animation-delay: -3s;
+                animation-duration: 10s;
+              }
+              .preview-parallax > use:nth-child(3) {
                 animation-delay: -4s;
+                animation-duration: 13s;
+              }
+              .preview-parallax > use:nth-child(4) {
+                animation-delay: -5s;
+                animation-duration: 20s;
+              }
+              @media (max-width: 768px) {
+                .preview-waves {
+                  height: 40px;
+                  min-height: 40px;
+                }
               }
             `}</style>
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl leading-tight text-white drop-shadow-md relative">
+            <h2 className="preview-motto text-4xl sm:text-5xl lg:text-6xl font-serif text-white mb-4">
               {animatedTitle}
               {isFinished && showBlinkingCursor && (
-                <span className="ml-2 inline-block h-0.5 w-8 fast-blink bg-white align-bottom"></span>
-              )
-              }
-            </h1>
-            <p className="mt-6 text-base max-w-prose leading-relaxed text-stone-200 drop-shadow-md text-center mx-auto">
+                <span className="preview-cursor ml-2">_</span>
+              )}
+            </h2>
+            <p className="text-lg text-stone-200 max-w-2xl mx-auto px-4">
               光影、尘埃、裂纹、静默。这里记录着那些不完美却充满诗意的瞬间，以及对生活本质的朴素思考。
             </p>
           </div>
-          
-          {/* Animated Wave SVG */}
-          <div className="absolute bottom-0 left-0 w-full overflow-hidden">
-            <svg
-              className="relative block w-[calc(100%+1.3px)] h-[60px]"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlnsXlink="http://www.w3.org/1999/xlink"
-              viewBox="0 24 150 28"
-              preserveAspectRatio="none"
-              shapeRendering="auto"
-            >
-              <defs>
-                <path
-                  id="gentle-wave"
-                  d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-                />
-              </defs>
-              <g className="preview-parallax">
-                <use xlinkHref="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
-              </g>
-              <g className="preview-parallax">
-                <use xlinkHref="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
-              </g>
-              <g className="preview-parallax">
-                <use xlinkHref="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
-              </g>
-              <g className="preview-parallax">
-                <use xlinkHref="#gentle-wave" x="48" y="7" fill="#fff" />
-              </g>
-            </svg>
-          </div>
-        </section>
 
-        {/* Latest Posts Section */}
-        <div className="container mx-auto max-w-6xl px-4 sm:px-8 relative z-10">
-          <section className="py-16 border-t border-stone-200">
-            <h2 className="font-serif text-2xl text-center mb-12 text-stone-700 tracking-widest">
-              最新随笔
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-              <PostCard post={latestPosts[0]} />
-              <PostCard post={latestPosts[1]} className="md:mt-16" />
-              <PostCard post={latestPosts[2]} />
+          {/* Scroll Indicator */}
+          <div className="preview-scroll absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+            <button 
+              onClick={scrollToContainer}
+              className="text-white hover:text-stone-300 transition-colors duration-300"
+            >
+              <svg className="w-8 h-8 animate-bounce" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Posts Container */}
+        <div className="container mx-auto max-w-6xl px-4 sm:px-8" id="container">
+          {/* Posts Grid */}
+          <section className="row py-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {currentPosts.map((post, index) => (
+                <div key={post.slug} className="post-item">
+                  <PostCard post={post} />
+                </div>
+              ))}
             </div>
           </section>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <section className="paginator text-center mb-16">
+              <div className="flex justify-center items-center space-x-2">
+                {currentPage > 1 && (
+                  <button
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                    className="px-4 py-2 text-stone-600 hover:text-stone-900 transition-colors"
+                  >
+                    &lt;
+                  </button>
+                )}
+                
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`px-4 py-2 rounded ${
+                      currentPage === page
+                        ? 'bg-stone-800 text-white'
+                        : 'text-stone-600 hover:text-stone-900'
+                    } transition-colors`}
+                  >
+                    {page}
+                  </button>
+                ))}
+                
+                {currentPage < totalPages && (
+                  <button
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    className="px-4 py-2 text-stone-600 hover:text-stone-900 transition-colors"
+                  >
+                    &gt;
+                  </button>
+                )}
+              </div>
+            </section>
+          )}
+          
           <Footer />
         </div>
       </main>

@@ -36,6 +36,72 @@ h1, h2, h3, h4, .font-serif {
   margin-top: 2px;
 }
 
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Post card styles */
+.post-wrap {
+  transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
+}
+
+.post-wrap:hover {
+  transform: translateY(-4px);
+}
+
+.post-image img {
+  transition: transform 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
+}
+
+.post-wrap:hover .post-image img {
+  transform: scale(1.05);
+}
+
+/* Wave animation styles */
+@keyframes move-forever {
+  0% {
+    transform: translate3d(-90px, 0, 0);
+  }
+  100% {
+    transform: translate3d(85px, 0, 0);
+  }
+}
+
+.preview-parallax > use {
+  animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+}
+
+.preview-parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+
+.preview-parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+
+.preview-parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+
+.preview-parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+
 /* Page transition animations */
 .page {
   animation: fadeIn 0.8s;
@@ -44,4 +110,16 @@ h1, h2, h3, h4, .font-serif {
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .preview-waves {
+    height: 40px;
+    min-height: 40px;
+  }
+  
+  .preview-motto {
+    font-size: 2rem;
+  }
 }
