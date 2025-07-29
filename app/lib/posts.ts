@@ -244,7 +244,7 @@ export const posts: Post[] = [
     date: '2025年6月18日',
     excerpt: '秋日的午后，一片金黄的落叶从树上飘落。它在空中旋转着，像一只翩翩起舞的蝴蝶，最终落在了我的脚边...',
     slug: 'falling-leaf',
-    image: 'https://images.pexels.com/photos/1287145/pexels-photo-1287145.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    image: 'https://images.pexels.com/photos/10451081/pexels-photo-10451081.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     content: `
 秋日的午后，一片金黄的落叶从树上飘落。它在空中旋转着，像一只翩翩起舞的蝴蝶，最终落在了我的脚边。
 
