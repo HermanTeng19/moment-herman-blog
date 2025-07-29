@@ -1,23 +1,40 @@
 import { notFound } from 'next/navigation';
+import { MDXRemote } from 'next-mdx-remote/rsc';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import MDXComponents from '../../components/MDXComponents';
 import { getPostBySlug, getAllPosts } from '../../lib/posts';
+import { getMDXPostBySlug, getAllMDXPosts } from '../../lib/mdx';
 
 interface PostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
-  const posts = getAllPosts();
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  // 获取所有文章（包括硬编码的和MDX的）
+  const hardcodedPosts = getAllPosts();
+  const mdxPosts = await getAllMDXPosts();
+  
+  const allSlugs = [
+    ...hardcodedPosts.map(post => ({ slug: post.slug })),
+    ...mdxPosts.map(post => ({ slug: post.slug }))
+  ];
+  
+  return allSlugs;
 }
 
-export default function PostPage({ params }: PostPageProps) {
-  const post = getPostBySlug(params.slug);
+export default async function PostPage({ params }: PostPageProps) {
+  const { slug } = await params;
+  
+  // 首先尝试获取MDX文章
+  const mdxPost = await getMDXPostBySlug(slug);
+  
+  // 如果没有找到MDX文章，尝试获取硬编码文章
+  const hardcodedPost = getPostBySlug(slug);
+  
+  const post = mdxPost || hardcodedPost;
 
   if (!post) {
     notFound();
@@ -42,11 +59,20 @@ export default function PostPage({ params }: PostPageProps) {
               />
             )}
             <div className="prose prose-stone max-w-none lg:prose-lg text-stone-700 leading-relaxed">
-              {post.content.split('\n\n').map((paragraph, index) => (
-                <p key={index} className="mb-4">
-                  {paragraph.trim()}
-                </p>
-              ))}
+              {mdxPost ? (
+                // 渲染MDX内容
+                <MDXRemote 
+                  source={post.content} 
+                  components={MDXComponents}
+                />
+              ) : (
+                // 渲染硬编码内容
+                post.content.split('\n\n').map((paragraph, index) => (
+                  <p key={index} className="mb-4">
+                    {paragraph.trim()}
+                  </p>
+                ))
+              )}
             </div>
           </div>
         </section>
