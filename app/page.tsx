@@ -123,7 +123,7 @@ export default function Home() {
           </div>
 
           {/* Hero Content */}
-          <div className="preview-motto-wrapper absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 text-center">
+          <div className="preview-motto-wrapper absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 text-center w-full max-w-6xl px-4 sm:px-8">
             <style jsx>{`
               @keyframes blink {
                 0% { opacity: 1; }
@@ -167,7 +167,7 @@ export default function Home() {
                 }
               }
             `}</style>
-            <h2 className="preview-motto text-4xl sm:text-5xl lg:text-6xl font-serif text-white mb-4">
+            <h2 className="preview-motto text-4xl sm:text-5xl lg:text-6xl font-serif text-white mb-4 whitespace-nowrap overflow-hidden">
               {animatedTitle}
               {isFinished && showBlinkingCursor && (
                 <span className="preview-cursor ml-2">_</span>
@@ -178,14 +178,19 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Scroll Indicator */}
-          <div className="preview-scroll absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+          {/* Scroll Indicator - Above Wave Animation */}
+          <div className="preview-scroll absolute bottom-24 sm:bottom-32 left-1/2 transform -translate-x-1/2 z-20">
             <button 
               onClick={scrollToContainer}
-              className="text-white hover:text-stone-300 transition-colors duration-300"
+              className="text-white hover:text-stone-300 transition-colors duration-300 p-3"
             >
-              <svg className="w-8 h-8 animate-bounce" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              <svg className="w-6 h-6 sm:w-8 sm:h-8 animate-bounce" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                {/* Mouse body */}
+                <path d="M12 2C8.5 2 6 4.5 6 8v8c0 3.5 2.5 6 6 6s6-2.5 6-6V8c0-3.5-2.5-6-6-6z"/>
+                {/* Scroll wheel */}
+                <ellipse cx="12" cy="8" rx="1" ry="0.5"/>
+                {/* Center line */}
+                <line x1="12" y1="8" x2="12" y2="14" stroke="currentColor" strokeWidth="1.5"/>
               </svg>
             </button>
           </div>

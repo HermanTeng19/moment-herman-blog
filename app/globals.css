@@ -123,3 +123,33 @@ h1, h2, h3, h4, .font-serif {
     font-size: 2rem;
   }
 }
+
+/* Hero title adjustments */
+.preview-motto-wrapper {
+  min-width: 320px;
+}
+
+@media (max-width: 640px) {
+  .preview-motto {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .preview-motto {
+    font-size: 1.5rem;
+  }
+}
+
+/* Scroll indicator improvements */
+.preview-scroll button {
+  transition: all 0.3s ease;
+}
+
+.preview-scroll button:hover {
+  transform: translateY(-2px);
+}
+
+.preview-scroll button:hover svg {
+  stroke: #ef4444;
+}
