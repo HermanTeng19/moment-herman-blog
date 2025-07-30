@@ -8,10 +8,10 @@ interface PostCardProps {
 
 export default function PostCard({ post, className = '' }: PostCardProps) {
   return (
-    <div className={`post-wrap group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden ${className}`}>
-      <Link href={`/posts/${post.slug}`} className="block">
+    <div className={`post-wrap group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col ${className}`}>
+      <Link href={`/posts/${post.slug}`} className="block h-full flex flex-col">
         {post.image && (
-          <div className="post-image relative w-full h-48 overflow-hidden">
+          <div className="post-image relative w-full h-48 overflow-hidden flex-shrink-0">
           <img 
             src={post.image} 
             alt="" 
@@ -20,8 +20,8 @@ export default function PostCard({ post, className = '' }: PostCardProps) {
           </div>
         )}
         
-        <div className="post-content p-6">
-          <div className="post-content-wrap">
+        <div className="post-content p-6 flex flex-col flex-grow">
+          <div className="post-content-wrap flex-grow">
             <h3 className="post-title font-serif text-xl mb-3 text-stone-800 group-hover:text-stone-500 transition-colors duration-300 line-clamp-2">
           {post.title}
         </h3>
@@ -32,7 +32,7 @@ export default function PostCard({ post, className = '' }: PostCardProps) {
             </div>
           </div>
           
-          <div className="post-info mt-4 pt-4 border-t border-stone-100">
+          <div className="post-info mt-4 pt-4 border-t border-stone-100 flex-shrink-0">
             <span className="text-xs text-stone-400 tracking-wider">
               {post.date}
             </span>

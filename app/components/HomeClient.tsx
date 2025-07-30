@@ -193,9 +193,9 @@ export default function HomeClient({ posts }: HomeClientProps) {
       <div className="container mx-auto max-w-6xl px-4 sm:px-8" id="container">
         {/* Posts Grid */}
         <section className="row py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {currentPosts.map((post, index) => (
-              <div key={post.slug} className="post-item">
+              <div key={post.slug} className="post-item h-full">
                 <PostCard post={post} />
               </div>
             ))}
