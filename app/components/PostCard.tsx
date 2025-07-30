@@ -8,7 +8,7 @@ interface PostCardProps {
 
 export default function PostCard({ post, className = '' }: PostCardProps) {
   return (
-    <div className={`post-wrap group bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col border border-border ${className}`}>
+    <div className={`post-wrap group bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col ${className}`}>
       <Link href={`/posts/${post.slug}`} className="block h-full flex flex-col">
         {post.image && (
           <div className="post-image overflow-hidden">
@@ -30,7 +30,7 @@ export default function PostCard({ post, className = '' }: PostCardProps) {
               </p>
             </div>
           </div>
-          <div className="post-info mt-4 pt-4 border-t border-border flex-shrink-0">
+          <div className="post-info mt-4 pt-4 flex-shrink-0">
             <span className="text-xs text-muted-foreground tracking-wider">
               {post.date}
             </span>
