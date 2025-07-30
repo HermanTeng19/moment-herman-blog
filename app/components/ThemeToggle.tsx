@@ -14,7 +14,7 @@ export default function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <button className="w-10 h-10 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+      <button className="w-10 h-10 bg-transparent flex items-center justify-center">
         <div className="w-5 h-5 bg-gray-400 rounded-full animate-pulse"></div>
       </button>
     );
@@ -27,7 +27,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="w-10 h-10 rounded-lg bg-white/80 dark:bg-dark-800/80 backdrop-blur-md shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center group"
+      className="w-10 h-10 bg-transparent transition-colors duration-300 flex items-center justify-center group"
       aria-label={`切换到${resolvedTheme === 'light' ? '深色' : '浅色'}主题`}
     >
       {resolvedTheme === 'light' ? (
