@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation';
 import { getPostBySlug, getAllPosts } from '@/app/lib/posts';
 import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
+import MDXComponents from '@/app/components/MDXComponents';
+import { MDXRemote } from 'next-mdx-remote/rsc';
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -30,6 +32,18 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 <h1 className="font-serif text-3xl sm:text-4xl mt-4 leading-tight text-foreground">
                   {post.title}
                 </h1>
+                {post.tags && (
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {post.tags.map((tag, index) => (
+                      <span 
+                        key={index}
+                        className="px-2 py-1 text-xs bg-muted text-muted-foreground rounded-md"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
               
               {post.image && (
@@ -41,7 +55,16 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               )}
               
               <div className="mt-8">
-                {post.content}
+                {post.content.includes('---') ? (
+                  // 如果是MDX内容，使用MDXRemote渲染
+                  <MDXRemote 
+                    source={post.content} 
+                    components={MDXComponents}
+                  />
+                ) : (
+                  // 如果是普通文本，直接显示
+                  <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                )}
               </div>
             </article>
           </div>

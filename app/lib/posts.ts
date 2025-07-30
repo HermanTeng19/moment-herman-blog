@@ -1,3 +1,7 @@
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+
 export interface Post {
   id: string;
   title: string;
@@ -6,6 +10,7 @@ export interface Post {
   content: string;
   image?: string;
   slug: string;
+  tags?: string[];
 }
 
 // 解析中文日期格式的函数
@@ -22,7 +27,47 @@ function parseChineseDate(dateStr: string): Date {
   return new Date(1900, 0, 1);
 }
 
-export const posts: Post[] = [
+// 从content/posts目录读取文章
+function getPostsFromFilesystem(): Post[] {
+  const postsDirectory = path.join(process.cwd(), 'content/posts');
+  const fileNames = fs.readdirSync(postsDirectory);
+  
+  const posts: Post[] = [];
+  
+  fileNames.forEach((fileName) => {
+    if (fileName.endsWith('.mdx') || fileName.endsWith('.md')) {
+      const filePath = path.join(postsDirectory, fileName);
+      const fileContents = fs.readFileSync(filePath, 'utf8');
+      
+      // 使用gray-matter解析frontmatter
+      const { data, content } = matter(fileContents);
+      
+      // 从文件名生成slug
+      const slug = fileName.replace(/\.(mdx|md)$/, '');
+      
+      // 确保所有必需字段都存在
+      if (data.title && data.date && data.excerpt) {
+        posts.push({
+          id: slug, // 使用slug作为id
+          title: data.title,
+          date: data.date,
+          excerpt: data.excerpt,
+          content: content.trim(),
+          image: data.image || undefined,
+          slug: slug,
+          tags: data.tags || undefined,
+        });
+      } else {
+        console.warn(`文章 ${fileName} 缺少必需的frontmatter字段`);
+      }
+    }
+  });
+  
+  return posts;
+}
+
+// 硬编码的文章数据
+const hardcodedPosts: Post[] = [
   {
     id: '12',
     title: '深夜咖啡馆的独白',
@@ -271,14 +316,45 @@ export const posts: Post[] = [
   }
 ];
 
-export function getPostBySlug(slug: string): Post | undefined {
-  return posts.find(post => post.slug === slug);
+// 合并文章：优先使用文件系统中的文章，然后添加硬编码文章
+export function getAllPosts(): Post[] {
+  try {
+    // 首先获取文件系统中的文章
+    const filePosts = getPostsFromFilesystem();
+    
+    // 然后添加硬编码文章，避免重复
+    const allPosts = [...filePosts];
+    
+    // 检查硬编码文章是否与文件系统文章重复（基于slug）
+    const fileSlugs = new Set(filePosts.map(post => post.slug));
+    
+    hardcodedPosts.forEach(post => {
+      if (!fileSlugs.has(post.slug)) {
+        allPosts.push(post);
+      }
+    });
+    
+    // 按日期排序
+    return allPosts.sort((a, b) => {
+      const dateA = parseChineseDate(a.date);
+      const dateB = parseChineseDate(b.date);
+      return dateB.getTime() - dateA.getTime();
+    });
+  } catch (error) {
+    console.error('读取文章时出错:', error);
+    // 如果读取文件系统失败，返回硬编码文章
+    return hardcodedPosts.sort((a, b) => {
+      const dateA = parseChineseDate(a.date);
+      const dateB = parseChineseDate(b.date);
+      return dateB.getTime() - dateA.getTime();
+    });
+  }
 }
 
-export function getAllPosts(): Post[] {
-  return posts.sort((a, b) => {
-    const dateA = parseChineseDate(a.date);
-    const dateB = parseChineseDate(b.date);
-    return dateB.getTime() - dateA.getTime();
-  });
-} 
+export function getPostBySlug(slug: string): Post | undefined {
+  const allPosts = getAllPosts();
+  return allPosts.find(post => post.slug === slug);
+}
+
+// 导出所有文章
+export const posts = getAllPosts(); 
