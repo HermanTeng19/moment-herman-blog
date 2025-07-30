@@ -3,8 +3,9 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import MDXComponents from '../../components/MDXComponents';
+import MarkdownRenderer from '../../components/MarkdownRenderer';
 import { getPostBySlug, getAllPosts } from '../../lib/posts';
-import { getMDXPostBySlug, getAllMDXPosts } from '../../lib/mdx';
+import { getMarkdownPostBySlug, getAllMarkdownPosts } from '../../lib/mdx';
 
 interface PostPageProps {
   params: Promise<{
@@ -13,13 +14,13 @@ interface PostPageProps {
 }
 
 export async function generateStaticParams() {
-  // 获取所有文章（包括硬编码的和MDX的）
+  // 获取所有文章（包括硬编码的和Markdown的）
   const hardcodedPosts = getAllPosts();
-  const mdxPosts = await getAllMDXPosts();
+  const markdownPosts = await getAllMarkdownPosts();
   
   const allSlugs = [
     ...hardcodedPosts.map(post => ({ slug: post.slug })),
-    ...mdxPosts.map(post => ({ slug: post.slug }))
+    ...markdownPosts.map(post => ({ slug: post.slug }))
   ];
   
   return allSlugs;
@@ -28,17 +29,21 @@ export async function generateStaticParams() {
 export default async function PostPage({ params }: PostPageProps) {
   const { slug } = await params;
   
-  // 首先尝试获取MDX文章
-  const mdxPost = await getMDXPostBySlug(slug);
+  // 首先尝试获取Markdown文章
+  const markdownPost = await getMarkdownPostBySlug(slug);
   
-  // 如果没有找到MDX文章，尝试获取硬编码文章
+  // 如果没有找到Markdown文章，尝试获取硬编码文章
   const hardcodedPost = getPostBySlug(slug);
   
-  const post = mdxPost || hardcodedPost;
+  const post = markdownPost || hardcodedPost;
 
   if (!post) {
     notFound();
   }
+
+  // 检查文件扩展名以决定渲染方式
+  const isMDX = markdownPost && slug.includes('.mdx');
+  const isMarkdown = markdownPost && !isMDX;
 
   return (
     <div className="container mx-auto max-w-6xl px-4 sm:px-8">
@@ -59,12 +64,15 @@ export default async function PostPage({ params }: PostPageProps) {
               />
             )}
             <div className="prose prose-stone max-w-none lg:prose-lg text-stone-700 leading-relaxed">
-              {mdxPost ? (
+              {isMDX ? (
                 // 渲染MDX内容
                 <MDXRemote 
                   source={post.content} 
                   components={MDXComponents}
                 />
+              ) : isMarkdown ? (
+                // 渲染Markdown内容
+                <MarkdownRenderer content={post.content} />
               ) : (
                 // 渲染硬编码内容
                 post.content.split('\n\n').map((paragraph, index) => (

@@ -3,16 +3,16 @@ import Footer from './components/Footer';
 import PostCard from './components/PostCard';
 import OrigamiBackground from './components/OrigamiBackground';
 import { getAllPosts } from './lib/posts';
-import { getAllMDXPosts } from './lib/mdx';
+import { getAllMarkdownPosts } from './lib/mdx';
 import HomeClient from './components/HomeClient';
 
 export default async function Home() {
-  // 获取所有文章（硬编码 + MDX）
+  // 获取所有文章（硬编码 + Markdown）
   const hardcodedPosts = getAllPosts();
-  const mdxPosts = await getAllMDXPosts();
+  const markdownPosts = await getAllMarkdownPosts();
   
   // 合并并排序所有文章
-  const allPosts = [...hardcodedPosts, ...mdxPosts].sort((a, b) => 
+  const allPosts = [...hardcodedPosts, ...markdownPosts].sort((a, b) => 
     new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 

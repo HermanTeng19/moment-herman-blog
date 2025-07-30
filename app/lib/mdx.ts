@@ -1,6 +1,6 @@
 import { Post } from './posts';
 
-export interface MDXPost extends Post {
+export interface MarkdownPost extends Post {
   content: string;
   frontmatter: {
     title: string;
@@ -11,8 +11,8 @@ export interface MDXPost extends Post {
   };
 }
 
-// 服务器端函数
-export async function getMDXPostBySlug(slug: string): Promise<MDXPost | null> {
+// 服务器端函数 - 支持 .md 和 .mdx 文件
+export async function getMarkdownPostBySlug(slug: string): Promise<MarkdownPost | null> {
   try {
     const fs = await import('fs');
     const path = await import('path');
@@ -20,10 +20,10 @@ export async function getMDXPostBySlug(slug: string): Promise<MDXPost | null> {
     
     const postsDirectory = process.cwd() + '/content/posts';
     
-    // 尝试读取 .mdx 文件
+    // 尝试 .mdx 文件
     let fullPath = path.join(postsDirectory, `${slug}.mdx`);
     if (!fs.existsSync(fullPath)) {
-      // 如果 .mdx 文件不存在，尝试读取 .md 文件
+      // 如果 .mdx 不存在，尝试 .md 文件
       fullPath = path.join(postsDirectory, `${slug}.md`);
     }
     
@@ -51,12 +51,12 @@ export async function getMDXPostBySlug(slug: string): Promise<MDXPost | null> {
       },
     };
   } catch (error) {
-    console.error(`Error reading MDX file for slug ${slug}:`, error);
+    console.error(`Error reading markdown file for slug ${slug}:`, error);
     return null;
   }
 }
 
-export async function getAllMDXPosts(): Promise<MDXPost[]> {
+export async function getAllMarkdownPosts(): Promise<MarkdownPost[]> {
   try {
     const fs = await import('fs');
     const path = await import('path');
@@ -89,16 +89,16 @@ export async function getAllMDXPosts(): Promise<MDXPost[]> {
           },
         };
       })
-      .sort((a: MDXPost, b: MDXPost) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      .sort((a: MarkdownPost, b: MarkdownPost) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
     return allPostsData;
   } catch (error) {
-    console.error('Error reading MDX posts directory:', error);
+    console.error('Error reading markdown posts directory:', error);
     return [];
   }
 }
 
-export async function getMDXPostSlugs(): Promise<string[]> {
+export async function getMarkdownPostSlugs(): Promise<string[]> {
   try {
     const fs = await import('fs');
     const path = await import('path');
@@ -109,7 +109,13 @@ export async function getMDXPostSlugs(): Promise<string[]> {
       .filter((fileName: string) => fileName.endsWith('.mdx') || fileName.endsWith('.md'))
       .map((fileName: string) => fileName.replace(/\.(mdx|md)$/, ''));
   } catch (error) {
-    console.error('Error reading MDX post slugs:', error);
+    console.error('Error reading markdown post slugs:', error);
     return [];
   }
-} 
+}
+
+// 向后兼容的别名
+export const getMDXPostBySlug = getMarkdownPostBySlug;
+export const getAllMDXPosts = getAllMarkdownPosts;
+export const getMDXPostSlugs = getMarkdownPostSlugs;
+export type MDXPost = MarkdownPost; 
