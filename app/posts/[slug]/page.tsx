@@ -55,14 +55,14 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               )}
               
               <div className="mt-8">
-                {post.content.includes('---') ? (
-                  // 如果是MDX内容，使用MDXRemote渲染
+                {post.content.includes('---') && !post.content.includes('<p>') ? (
+                  // 如果是MDX内容（包含frontmatter但不包含HTML标签），使用MDXRemote渲染
                   <MDXRemote 
                     source={post.content} 
                     components={MDXComponents}
                   />
                 ) : (
-                  // 如果是普通文本，直接显示
+                  // 如果是HTML内容或普通文本，直接显示
                   <div dangerouslySetInnerHTML={{ __html: post.content }} />
                 )}
               </div>
