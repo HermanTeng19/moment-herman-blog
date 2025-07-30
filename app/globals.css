@@ -4,38 +4,38 @@
   --font-noto-sans-sc: 'Noto Sans SC', sans-serif;
   --font-noto-serif-sc: 'Noto Serif SC', serif;
   
-  /* 浅色主题变量 */
-  --bg-primary: #fdfcfb;
+  /* 浅色主题变量 - 优化对比度 */
+  --bg-primary: #ffffff;
   --bg-secondary: #ffffff;
   --bg-tertiary: #f8f9fa;
-  --text-primary: #4a4a4a;
-  --text-secondary: #78716c;
-  --text-tertiary: #a8a29e;
-  --border-color: #e7e5e4;
-  --border-secondary: #f1f5f9;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-tertiary: #6b7280;
+  --border-color: #e5e7eb;
+  --border-secondary: #f3f4f6;
   --shadow-color: rgba(0, 0, 0, 0.1);
   --shadow-color-hover: rgba(0, 0, 0, 0.15);
   --bg-filter: none;
   
-  /* 新增：更精确的颜色控制 */
-  --color-background: #fdfcfb;
-  --color-foreground: #4a4a4a;
+  /* 新增：更精确的颜色控制 - 提高对比度 */
+  --color-background: #ffffff;
+  --color-foreground: #1a1a1a;
   --color-card: #ffffff;
-  --color-card-foreground: #4a4a4a;
+  --color-card-foreground: #1a1a1a;
   --color-popover: #ffffff;
-  --color-popover-foreground: #4a4a4a;
+  --color-popover-foreground: #1a1a1a;
   --color-primary: #a1887f;
   --color-primary-foreground: #ffffff;
   --color-secondary: #f8f9fa;
-  --color-secondary-foreground: #78716c;
-  --color-muted: #f1f5f9;
-  --color-muted-foreground: #a8a29e;
-  --color-accent: #f1f5f9;
-  --color-accent-foreground: #78716c;
+  --color-secondary-foreground: #4a4a4a;
+  --color-muted: #f3f4f6;
+  --color-muted-foreground: #6b7280;
+  --color-accent: #f3f4f6;
+  --color-accent-foreground: #4a4a4a;
   --color-destructive: #ef4444;
   --color-destructive-foreground: #ffffff;
-  --color-border: #e7e5e4;
-  --color-input: #e7e5e4;
+  --color-border: #e5e7eb;
+  --color-input: #e5e7eb;
   --color-ring: #a1887f;
   --color-radius: 0.5rem;
 }

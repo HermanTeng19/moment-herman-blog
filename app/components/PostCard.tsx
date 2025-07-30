@@ -25,13 +25,13 @@ export default function PostCard({ post, className = '' }: PostCardProps) {
               {post.title}
             </h3>
             <div className="post-excerpt">
-              <p className="text-sm leading-relaxed text-muted-foreground line-clamp-3">
+              <p className="text-sm leading-relaxed text-foreground line-clamp-3">
                 {post.excerpt}
               </p>
             </div>
           </div>
           <div className="post-info mt-4 pt-4 flex-shrink-0">
-            <span className="text-xs text-muted-foreground tracking-wider">
+            <span className="text-xs text-secondary-foreground tracking-wider">
               {post.date}
             </span>
           </div>

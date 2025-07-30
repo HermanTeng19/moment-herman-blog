@@ -186,7 +186,7 @@ export default function OrigamiBackground() {
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0"
       style={{
-        background: 'linear-gradient(to bottom, rgba(208, 225, 249, 0.3) 0%, rgba(240, 248, 255, 0.3) 100%)',
+        background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(248, 250, 252, 0.1) 100%)',
         filter: 'var(--bg-filter)'
       }}
     />
