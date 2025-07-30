@@ -12,7 +12,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
       components={{
         h1: ({ children, ...props }) => (
           <h1
-            className="font-serif text-3xl sm:text-4xl mt-8 mb-6 leading-tight text-stone-800"
+            className="font-serif text-3xl sm:text-4xl mt-8 mb-6 leading-tight text-stone-800 dark:text-stone-200"
             {...props}
           >
             {children}
@@ -20,7 +20,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
         ),
         h2: ({ children, ...props }) => (
           <h2
-            className="font-serif text-2xl sm:text-3xl mt-8 mb-4 leading-tight text-stone-800"
+            className="font-serif text-2xl sm:text-3xl mt-8 mb-4 leading-tight text-stone-800 dark:text-stone-200"
             {...props}
           >
             {children}
@@ -28,7 +28,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
         ),
         h3: ({ children, ...props }) => (
           <h3
-            className="font-serif text-xl sm:text-2xl mt-6 mb-3 leading-tight text-stone-800"
+            className="font-serif text-xl sm:text-2xl mt-6 mb-3 leading-tight text-stone-800 dark:text-stone-200"
             {...props}
           >
             {children}
@@ -36,7 +36,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
         ),
         p: ({ children, ...props }) => (
           <p
-            className="mb-4 text-stone-700 leading-relaxed"
+            className="mb-4 text-stone-700 dark:text-stone-300 leading-relaxed"
             {...props}
           >
             {children}
@@ -44,7 +44,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
         ),
         ul: ({ children, ...props }) => (
           <ul
-            className="mb-4 pl-6 space-y-2 text-stone-700"
+            className="mb-4 pl-6 space-y-2 text-stone-700 dark:text-stone-300"
             {...props}
           >
             {children}
@@ -52,7 +52,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
         ),
         ol: ({ children, ...props }) => (
           <ol
-            className="mb-4 pl-6 space-y-2 text-stone-700"
+            className="mb-4 pl-6 space-y-2 text-stone-700 dark:text-stone-300"
             {...props}
           >
             {children}
@@ -60,7 +60,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
         ),
         li: ({ children, ...props }) => (
           <li
-            className="text-stone-700"
+            className="text-stone-700 dark:text-stone-300"
             {...props}
           >
             {children}
@@ -68,7 +68,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
         ),
         blockquote: ({ children, ...props }) => (
           <blockquote
-            className="border-l-4 border-stone-300 pl-4 my-6 italic text-stone-600"
+            className="border-l-4 border-stone-300 dark:border-stone-600 pl-4 my-6 italic text-stone-600 dark:text-stone-400"
             {...props}
           >
             {children}
@@ -76,7 +76,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
         ),
         code: ({ children, ...props }) => (
           <code
-            className="bg-stone-100 px-2 py-1 rounded text-sm font-mono text-stone-800"
+            className="bg-stone-100 dark:bg-dark-700 px-2 py-1 rounded text-sm font-mono text-stone-800 dark:text-stone-200"
             {...props}
           >
             {children}
@@ -84,7 +84,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
         ),
         pre: ({ children, ...props }) => (
           <pre
-            className="bg-stone-100 p-4 rounded-lg overflow-x-auto my-6"
+            className="bg-stone-100 dark:bg-dark-700 p-4 rounded-lg overflow-x-auto my-6"
             {...props}
           >
             {children}
@@ -93,7 +93,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
         a: ({ children, href, ...props }) => (
           <a
             href={href}
-            className="text-stone-600 hover:text-stone-800 underline transition-colors"
+            className="text-stone-600 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 underline transition-colors"
             {...props}
           >
             {children}
@@ -104,20 +104,20 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
             <img
               src={src}
               alt={alt || ''}
-              className="w-full h-auto rounded-sm shadow-sm shadow-stone-200"
+              className="w-full h-auto rounded-sm shadow-sm shadow-stone-200 dark:shadow-dark-800"
               {...props}
             />
           </div>
         ),
         hr: ({ ...props }) => (
           <hr
-            className="border-stone-300 my-8"
+            className="border-stone-300 dark:border-stone-600 my-8"
             {...props}
           />
         ),
         strong: ({ children, ...props }) => (
           <strong
-            className="font-semibold text-stone-800"
+            className="font-semibold text-stone-800 dark:text-stone-200"
             {...props}
           >
             {children}
@@ -125,7 +125,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
         ),
         em: ({ children, ...props }) => (
           <em
-            className="italic text-stone-700"
+            className="italic text-stone-700 dark:text-stone-300"
             {...props}
           >
             {children}

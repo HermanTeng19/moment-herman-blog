@@ -19,7 +19,7 @@ export default function GalleryPage() {
       
       <main>
         <section className="py-16 sm:py-24">
-          <h1 className="font-serif text-4xl text-center mb-16 tracking-widest text-stone-800">
+          <h1 className="font-serif text-4xl text-center mb-16 tracking-widest text-stone-800 dark:text-stone-200">
             光影集
           </h1>
           {/* Masonry-like grid */}
@@ -27,7 +27,7 @@ export default function GalleryPage() {
             {images.map((image, index) => (
               <img 
                 key={index}
-                className="mb-4 sm:mb-6 rounded-sm shadow-sm shadow-stone-200" 
+                className="mb-4 sm:mb-6 rounded-sm shadow-sm shadow-stone-200 dark:shadow-dark-800" 
                 src={image} 
                 alt=""
               />

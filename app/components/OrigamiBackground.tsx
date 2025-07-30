@@ -28,7 +28,14 @@ export default function OrigamiBackground() {
   const mouseRef = useRef<Mouse>({ x: null, y: null, radius: 150 });
   const animationRef = useRef<number | undefined>(undefined);
 
-  const colors = ['#ff7979', '#badc58', '#f9ca24', '#7ed6df', '#e056fd'];
+  // 根据主题调整颜色
+  const getColors = () => {
+    const isDark = document.documentElement.classList.contains('dark');
+    return isDark 
+      ? ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57'] // 深色主题颜色
+      : ['#ff7979', '#badc58', '#f9ca24', '#7ed6df', '#e056fd']; // 浅色主题颜色
+  };
+
   const birdCount = 15; // 减少鸟的数量，避免影响页面性能
 
   useEffect(() => {
@@ -56,7 +63,7 @@ export default function OrigamiBackground() {
         this.x = x || Math.random() * width;
         this.y = y || Math.random() * height;
         this.size = Math.random() * 15 + 10;
-        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.color = getColors()[Math.floor(Math.random() * getColors().length)];
         this.speedX = Math.random() * 2 - 1;
         this.speedY = Math.random() * 2 - 1;
         this.angle = Math.atan2(this.speedY, this.speedX);
@@ -105,7 +112,8 @@ export default function OrigamiBackground() {
         context.lineTo(-this.size * 0.6, 0);
         context.lineTo(this.size * 0.3, 0); // Head
         context.lineTo(-this.size * 0.6, 0);
-        context.strokeStyle = 'rgba(0,0,0,0.3)';
+        const isDark = document.documentElement.classList.contains('dark');
+        context.strokeStyle = isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)';
         context.stroke();
 
         context.restore();
@@ -178,7 +186,8 @@ export default function OrigamiBackground() {
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0"
       style={{
-        background: 'linear-gradient(to bottom, rgba(208, 225, 249, 0.3) 0%, rgba(240, 248, 255, 0.3) 100%)'
+        background: 'linear-gradient(to bottom, rgba(208, 225, 249, 0.3) 0%, rgba(240, 248, 255, 0.3) 100%)',
+        filter: 'var(--bg-filter)'
       }}
     />
   );

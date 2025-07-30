@@ -30,7 +30,7 @@ export default function CharacterCard({ name, role, power }: CharacterCardProps)
           className="absolute w-full h-full"
           style={{ backfaceVisibility: 'hidden' }}
         >
-          <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg p-4 text-white shadow-lg">
+          <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg p-4 text-white shadow-lg dark:shadow-xl">
             <div className="flex flex-col justify-between h-full">
               <div>
                 <h3 className="text-lg font-bold mb-1">{name}</h3>
@@ -51,7 +51,7 @@ export default function CharacterCard({ name, role, power }: CharacterCardProps)
             transform: 'rotateY(180deg)'
           }}
         >
-          <div className="w-full h-full bg-gradient-to-br from-orange-500 to-red-600 rounded-lg p-4 text-white shadow-lg">
+          <div className="w-full h-full bg-gradient-to-br from-orange-500 to-red-600 rounded-lg p-4 text-white shadow-lg dark:shadow-xl">
             <div className="flex flex-col justify-between h-full">
               <div>
                 <h3 className="text-lg font-bold mb-1">{name}</h3>

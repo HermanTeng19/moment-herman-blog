@@ -209,7 +209,7 @@ export default function HomeClient({ posts }: HomeClientProps) {
               {currentPage > 1 && (
                 <button
                   onClick={() => setCurrentPage(currentPage - 1)}
-                  className="px-4 py-2 text-stone-600 hover:text-stone-900 transition-colors"
+                  className="px-4 py-2 text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200 transition-colors"
                 >
                   &lt;
                 </button>
@@ -219,11 +219,11 @@ export default function HomeClient({ posts }: HomeClientProps) {
                 <button
                   key={page}
                   onClick={() => setCurrentPage(page)}
-                  className={`px-4 py-2 rounded ${
+                  className={`px-4 py-2 rounded transition-colors ${
                     currentPage === page
-                      ? 'bg-stone-800 text-white'
-                      : 'text-stone-600 hover:text-stone-900'
-                  } transition-colors`}
+                      ? 'bg-stone-800 dark:bg-stone-200 text-white dark:text-stone-800'
+                      : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200'
+                  }`}
                 >
                   {page}
                 </button>
@@ -232,7 +232,7 @@ export default function HomeClient({ posts }: HomeClientProps) {
               {currentPage < totalPages && (
                 <button
                   onClick={() => setCurrentPage(currentPage + 1)}
-                  className="px-4 py-2 text-stone-600 hover:text-stone-900 transition-colors"
+                  className="px-4 py-2 text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200 transition-colors"
                 >
                   &gt;
                 </button>

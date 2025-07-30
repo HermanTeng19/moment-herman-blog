@@ -3,12 +3,88 @@
 :root {
   --font-noto-sans-sc: 'Noto Sans SC', sans-serif;
   --font-noto-serif-sc: 'Noto Serif SC', serif;
+  
+  /* 浅色主题变量 */
+  --bg-primary: #fdfcfb;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f8f9fa;
+  --text-primary: #4a4a4a;
+  --text-secondary: #78716c;
+  --text-tertiary: #a8a29e;
+  --border-color: #e7e5e4;
+  --border-secondary: #f1f5f9;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-color-hover: rgba(0, 0, 0, 0.15);
+  --bg-filter: none;
+  
+  /* 新增：更精确的颜色控制 */
+  --color-background: #fdfcfb;
+  --color-foreground: #4a4a4a;
+  --color-card: #ffffff;
+  --color-card-foreground: #4a4a4a;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #4a4a4a;
+  --color-primary: #a1887f;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f8f9fa;
+  --color-secondary-foreground: #78716c;
+  --color-muted: #f1f5f9;
+  --color-muted-foreground: #a8a29e;
+  --color-accent: #f1f5f9;
+  --color-accent-foreground: #78716c;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #e7e5e4;
+  --color-input: #e7e5e4;
+  --color-ring: #a1887f;
+  --color-radius: 0.5rem;
+}
+
+.dark {
+  /* 深色主题变量 */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --border-color: #334155;
+  --border-secondary: #475569;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --shadow-color-hover: rgba(0, 0, 0, 0.4);
+  --bg-filter: invert(1) hue-rotate(180deg);
+  
+  /* 深色主题精确颜色控制 */
+  --color-background: #0f172a;
+  --color-foreground: #f1f5f9;
+  --color-card: #1e293b;
+  --color-card-foreground: #f1f5f9;
+  --color-popover: #1e293b;
+  --color-popover-foreground: #f1f5f9;
+  --color-primary: #a1887f;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #334155;
+  --color-secondary-foreground: #cbd5e1;
+  --color-muted: #334155;
+  --color-muted-foreground: #94a3b8;
+  --color-accent: #334155;
+  --color-accent-foreground: #cbd5e1;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #334155;
+  --color-input: #334155;
+  --color-ring: #a1887f;
+}
+
+/* 主题切换动画 */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 body {
   font-family: var(--font-noto-sans-sc);
-  background-color: #fdfcfb;
-  color: #4a4a4a;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
 }
 
 h1, h2, h3, h4, .font-serif {
@@ -21,7 +97,7 @@ h1, h2, h3, h4, .font-serif {
   display: block;
   width: 100%;
   height: 1px;
-  background-color: #a1887f;
+  background-color: var(--color-primary);
   transform: scaleX(1);
   transition: transform 0.3s ease;
   margin-top: 2px;
@@ -32,7 +108,7 @@ h1, h2, h3, h4, .font-serif {
   display: block;
   width: 100%;
   height: 1px;
-  background-color: #a1887f;
+  background-color: var(--color-primary);
   margin-top: 2px;
 }
 
@@ -208,15 +284,53 @@ h1, h2, h3, h4, .font-serif {
 }
 
 .game-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--color-muted);
   border-radius: 3px;
 }
 
 .game-scroll::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: var(--color-muted-foreground);
   border-radius: 3px;
 }
 
 .game-scroll::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+  background: var(--color-secondary-foreground);
+}
+
+/* 新增：更好的深色主题支持 */
+.dark .game-scroll::-webkit-scrollbar-track {
+  background: var(--color-muted);
+}
+
+.dark .game-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-muted-foreground);
+}
+
+.dark .game-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary-foreground);
+}
+
+/* 新增：系统主题检测优化 */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --color-background: #0f172a;
+    --color-foreground: #f1f5f9;
+    --color-card: #1e293b;
+    --color-card-foreground: #f1f5f9;
+    --color-popover: #1e293b;
+    --color-popover-foreground: #f1f5f9;
+    --color-primary: #a1887f;
+    --color-primary-foreground: #ffffff;
+    --color-secondary: #334155;
+    --color-secondary-foreground: #cbd5e1;
+    --color-muted: #334155;
+    --color-muted-foreground: #94a3b8;
+    --color-accent: #334155;
+    --color-accent-foreground: #cbd5e1;
+    --color-destructive: #ef4444;
+    --color-destructive-foreground: #ffffff;
+    --color-border: #334155;
+    --color-input: #334155;
+    --color-ring: #a1887f;
+  }
 }
