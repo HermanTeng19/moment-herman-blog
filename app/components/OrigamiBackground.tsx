@@ -12,15 +12,24 @@ interface Bird {
   angle: number;
   flapSpeed: number;
   flapAngle: number;
-  update: (mouse: { x: number | null; y: number | null; radius: number }, width: number, height: number) => void;
-  draw: (ctx: CanvasRenderingContext2D) => void;
+  update: () => void;
+  draw: (context: CanvasRenderingContext2D) => void;
+}
+
+interface Mouse {
+  x: number | null;
+  y: number | null;
+  radius: number;
 }
 
 export default function OrigamiBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number | undefined>(undefined);
   const birdsRef = useRef<Bird[]>([]);
-  const mouseRef = useRef<{ x: number | null; y: number | null; radius: number }>({ x: null, y: null, radius: 150 });
+  const mouseRef = useRef<Mouse>({ x: null, y: null, radius: 150 });
+  const animationRef = useRef<number | undefined>(undefined);
+
+  const colors = ['#ff7979', '#badc58', '#f9ca24', '#7ed6df', '#e056fd'];
+  const birdCount = 15; // 减少鸟的数量，避免影响页面性能
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -31,9 +40,6 @@ export default function OrigamiBackground() {
 
     let width = canvas.width = window.innerWidth;
     let height = canvas.height = window.innerHeight;
-
-    const colors = ['#ff7979', '#badc58', '#f9ca24', '#7ed6df', '#e056fd'];
-    const birdCount = 12; // Reduced for better performance
 
     class BirdClass implements Bird {
       x: number;
@@ -49,25 +55,23 @@ export default function OrigamiBackground() {
       constructor(x?: number, y?: number) {
         this.x = x || Math.random() * width;
         this.y = y || Math.random() * height;
-        this.size = Math.random() * 12 + 8; // Slightly smaller
+        this.size = Math.random() * 15 + 10;
         this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.speedX = Math.random() * 1.5 - 0.75; // Slower speed
-        this.speedY = Math.random() * 1.5 - 0.75;
+        this.speedX = Math.random() * 2 - 1;
+        this.speedY = Math.random() * 2 - 1;
         this.angle = Math.atan2(this.speedY, this.speedX);
-        this.flapSpeed = Math.random() * 0.15 + 0.08;
+        this.flapSpeed = Math.random() * 0.2 + 0.1;
         this.flapAngle = 0;
       }
 
-      update(mouse: { x: number | null; y: number | null; radius: number }, width: number, height: number) {
-        if (mouse.x !== null && mouse.y !== null) {
-          const dx = this.x - mouse.x;
-          const dy = this.y - mouse.y;
-          const distance = Math.hypot(dx, dy);
+      update() {
+        const dx = this.x - (mouseRef.current.x || 0);
+        const dy = this.y - (mouseRef.current.y || 0);
+        const distance = Math.hypot(dx, dy);
 
-          if (distance < mouse.radius) {
-            this.x += dx / distance * 1.5;
-            this.y += dy / distance * 1.5;
-          }
+        if (mouseRef.current.x && distance < mouseRef.current.radius) {
+          this.x += dx / distance * 2;
+          this.y += dy / distance * 2;
         }
 
         this.x += this.speedX;
@@ -80,34 +84,31 @@ export default function OrigamiBackground() {
         this.flapAngle += this.flapSpeed;
       }
 
-      draw(ctx: CanvasRenderingContext2D) {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle);
+      draw(context: CanvasRenderingContext2D) {
+        context.save();
+        context.translate(this.x, this.y);
+        context.rotate(this.angle);
 
         const wingFlap = Math.sin(this.flapAngle) * (this.size / 4);
 
-        // Draw bird body
-        ctx.beginPath();
-        ctx.moveTo(0, 0); // Tail
-        ctx.lineTo(-this.size, wingFlap); // Left wing tip
-        ctx.lineTo(-this.size * 0.8, 0); // Body-wing joint
-        ctx.lineTo(-this.size, -wingFlap); // Right wing tip
-        ctx.lineTo(0, 0);
-        ctx.fillStyle = this.color;
-        ctx.fill();
+        context.beginPath();
+        context.moveTo(0, 0); // Tail
+        context.lineTo(-this.size, wingFlap); // Left wing tip
+        context.lineTo(-this.size * 0.8, 0); // Body-wing joint
+        context.lineTo(-this.size, -wingFlap); // Left wing tip (down)
+        context.lineTo(0, 0);
+        context.fillStyle = this.color;
+        context.fill();
         
-        // Draw bird outline
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(-this.size * 0.6, 0);
-        ctx.lineTo(this.size * 0.3, 0); // Head
-        ctx.lineTo(-this.size * 0.6, 0);
-        ctx.strokeStyle = 'rgba(0,0,0,0.2)';
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
+        context.beginPath();
+        context.moveTo(0,0);
+        context.lineTo(-this.size * 0.6, 0);
+        context.lineTo(this.size * 0.3, 0); // Head
+        context.lineTo(-this.size * 0.6, 0);
+        context.strokeStyle = 'rgba(0,0,0,0.3)';
+        context.stroke();
 
-        ctx.restore();
+        context.restore();
       }
     }
 
@@ -120,17 +121,13 @@ export default function OrigamiBackground() {
 
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
-      
       for (const bird of birdsRef.current) {
-        bird.update(mouseRef.current, width, height);
+        bird.update();
         bird.draw(ctx);
       }
-      
-      // Limit the number of birds
       if (birdsRef.current.length > 30) {
         birdsRef.current.splice(0, 1);
       }
-      
       animationRef.current = requestAnimationFrame(animate);
     };
 
@@ -154,17 +151,17 @@ export default function OrigamiBackground() {
       birdsRef.current.push(new BirdClass(e.x, e.y));
     };
 
-    // Event listeners
+    // 初始化
+    init();
+    animate();
+
+    // 事件监听
     window.addEventListener('resize', handleResize);
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseout', handleMouseOut);
     window.addEventListener('click', handleClick);
 
-    // Initialize and start animation
-    init();
-    animate();
-
-    // Cleanup
+    // 清理函数
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
@@ -176,18 +173,13 @@ export default function OrigamiBackground() {
     };
   }, []);
 
-        return (
-        <>
-          <canvas
-            ref={canvasRef}
-            className="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-20"
-            style={{
-              background: 'linear-gradient(to bottom, rgba(208, 225, 249, 0.05) 0%, rgba(240, 248, 255, 0.05) 100%)'
-            }}
-          />
-          <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 text-xs text-stone-400 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
-            移动鼠标扰动鸟群 | 点击放飞新鸟
-          </div>
-        </>
-      );
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-0"
+      style={{
+        background: 'linear-gradient(to bottom, rgba(208, 225, 249, 0.3) 0%, rgba(240, 248, 255, 0.3) 100%)'
+      }}
+    />
+  );
 } 
