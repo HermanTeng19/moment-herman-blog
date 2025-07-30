@@ -1,154 +1,291 @@
-# MDX 支持指南
+# MDX & Markdown 使用指南
 
-本项目已成功添加了 MDX 支持，允许您使用 Markdown 语法编写文章，同时支持 React 组件和自定义样式。
+本指南介绍如何在云舒亭博客中使用 MDX 和 Markdown 格式编写文章。
 
-## 功能特性
+## 📝 支持的格式
 
-- ✅ 支持标准 Markdown 语法
-- ✅ 支持 React 组件嵌入
-- ✅ 自定义 MDX 组件样式
-- ✅ 与现有硬编码文章共存
-- ✅ 自动排序和分页
-- ✅ 完整的 TypeScript 支持
+项目支持两种内容格式：
 
-## 文件结构
+### 1. MDX 格式 (`.mdx`)
+- 支持所有标准 Markdown 语法
+- 可以在文章中使用 React 组件
+- 支持 JSX 语法
+- 适合需要交互式内容的文章
 
+### 2. Markdown 格式 (`.md`)
+- 标准 Markdown 语法
+- 轻量级，适合纯文本内容
+- 更好的编辑器支持
+- 适合简单的文章内容
+
+## 🗂️ 文件组织
+
+### 目录结构
 ```
 content/
-  posts/
-    spring-morning.mdx      # MDX 文章示例
-    coffee-philosophy.mdx   # MDX 文章示例
+└── posts/
+    ├── spring-morning.mdx      # MDX 格式文章
+    ├── coffee-philosophy.mdx   # MDX 格式文章
+    └── my-article.md           # Markdown 格式文章
 ```
 
-## 创建新的 MDX 文章
+### 文件命名规则
+- 使用描述性的文件名
+- 使用连字符分隔单词
+- 避免使用中文文件名
+- 文件扩展名：`.mdx` 或 `.md`
 
-1. 在 `content/posts/` 目录下创建新的 `.mdx` 文件
-2. 使用以下 frontmatter 格式：
+## 📋 前置元数据 (Frontmatter)
 
-```mdx
+所有文章文件都需要包含前置元数据，格式如下：
+
+```yaml
 ---
 title: "文章标题"
-date: "2025年1月20日"
-excerpt: "文章摘要，用于首页显示..."
+date: "2025年1月21日"
+excerpt: "文章摘要，用于首页和列表页显示"
 image: "https://example.com/image.jpg"
-tags: ["标签1", "标签2"]
+tags: ["标签1", "标签2", "标签3"]
 ---
-
-# 文章内容
-
-这里是文章的主体内容，支持所有 Markdown 语法。
-
-## 二级标题
-
-- 列表项 1
-- 列表项 2
-
-> 引用文本
-
-**粗体文本** 和 *斜体文本*
-
-### 代码块
-
-```javascript
-console.log("Hello, MDX!");
 ```
 
-## 支持的 Markdown 语法
+### 字段说明
 
-### 标题
-- `# 一级标题`
-- `## 二级标题`
-- `### 三级标题`
+| 字段 | 类型 | 必需 | 说明 |
+|------|------|------|------|
+| `title` | string | ✅ | 文章标题 |
+| `date` | string | ✅ | 发布日期 |
+| `excerpt` | string | ✅ | 文章摘要 |
+| `image` | string | ❌ | 特色图片URL |
+| `tags` | array | ❌ | 标签数组 |
 
-### 文本格式
-- `**粗体**`
-- `*斜体*`
-- `~~删除线~~`
+## ✍️ 写作语法
 
-### 列表
-- 无序列表：`- 项目`
-- 有序列表：`1. 项目`
+### 基础 Markdown 语法
 
-### 引用
-- `> 引用文本`
+#### 标题
+```markdown
+# 一级标题
+## 二级标题
+### 三级标题
+#### 四级标题
+```
 
-### 代码
-- 行内代码：`` `代码` ``
-- 代码块：``` ``` ```
+#### 文本格式
+```markdown
+**粗体文本**
+*斜体文本*
+`行内代码`
+~~删除线~~
+```
 
-### 链接和图片
-- 链接：`[文本](URL)`
-- 图片：`![alt](URL)`
+#### 列表
+```markdown
+# 无序列表
+- 第一项
+- 第二项
+- 第三项
 
-### 分割线
-- `---`
+# 有序列表
+1. 第一步
+2. 第二步
+3. 第三步
+```
 
-## 自定义样式
+#### 链接和图片
+```markdown
+[链接文本](https://example.com)
+![图片描述](https://example.com/image.jpg)
+```
 
-MDX 组件使用与现有文章相同的样式系统，确保视觉一致性：
+#### 引用
+```markdown
+> 这是一个引用块
+> 可以包含多行内容
+```
 
-- 标题使用 `font-serif` 字体
-- 正文使用 `text-stone-700` 颜色
-- 引用使用左边框样式
-- 代码块使用灰色背景
+#### 代码块
+```markdown
+```javascript
+function hello() {
+  console.log('Hello, World!');
+}
+```
+```
 
-## 与现有文章的兼容性
+#### 分隔线
+```markdown
+---
+```
 
-- MDX 文章和硬编码文章可以共存
-- 所有文章按日期自动排序
-- 分页功能支持混合内容
-- 文章详情页面自动检测内容类型
+### MDX 特有功能
 
-## 技术实现
+#### 使用 React 组件
+```mdx
+---
+title: "使用组件的文章"
+date: "2025年1月21日"
+excerpt: "展示如何在MDX中使用React组件"
+---
 
-### 核心文件
-- `app/lib/mdx.ts` - MDX 文件处理逻辑
-- `app/components/MDXComponents.tsx` - 自定义 MDX 组件
-- `app/posts/[slug]/page.tsx` - 文章详情页面
-- `next.config.ts` - Next.js MDX 配置
+# 使用组件的文章
 
-### 依赖包
-- `@next/mdx` - Next.js MDX 支持
-- `@mdx-js/react` - MDX React 组件
-- `next-mdx-remote` - 远程 MDX 渲染
-- `gray-matter` - Frontmatter 解析
+这是一个普通的段落。
 
-## 示例文章
+<MyCustomComponent prop="value" />
 
-### spring-morning.mdx
-展示了基本的 Markdown 语法使用，包括标题、列表、引用等。
+继续写文章内容...
+```
 
-### coffee-philosophy.mdx
-展示了更复杂的内容结构，包括代码块、嵌套列表等。
+#### 导入组件
+```mdx
+import MyComponent from '../components/MyComponent'
 
-## 注意事项
+# 文章标题
 
-1. **文件命名**：使用小写字母和连字符，如 `my-article.mdx`
-2. **Frontmatter**：必须包含 `title`、`date`、`excerpt` 字段
-3. **图片**：建议使用外部图片 URL 或 Next.js Image 组件
-4. **代码块**：支持语法高亮，指定语言如 ```javascript
+<MyComponent />
+```
 
-## 故障排除
+## 🎨 样式和主题
+
+### 自动样式
+所有 Markdown 内容都会自动应用以下样式：
+
+- **标题**: 使用 Noto Serif SC 字体，不同级别有不同的字体大小
+- **段落**: 使用 Noto Sans SC 字体，适当的行高和间距
+- **代码**: 灰色背景，圆角边框
+- **引用**: 左边框，斜体样式
+- **列表**: 适当的缩进和间距
+
+### 自定义样式
+如果需要自定义样式，可以在 `app/components/MDXComponents.tsx` 或 `app/components/MarkdownRenderer.tsx` 中修改组件样式。
+
+## 📱 响应式设计
+
+所有内容都会自动适配不同屏幕尺寸：
+
+- **桌面端**: 最大宽度限制，居中显示
+- **平板端**: 适当缩小字体和间距
+- **手机端**: 单列布局，优化触摸体验
+
+## 🔧 技术实现
+
+### 文件处理流程
+1. 系统扫描 `content/posts/` 目录
+2. 读取所有 `.mdx` 和 `.md` 文件
+3. 解析前置元数据
+4. 根据文件类型选择渲染器
+5. 生成静态页面
+
+### 渲染器选择
+- `.mdx` 文件 → MDXRemote 渲染器
+- `.md` 文件 → ReactMarkdown 渲染器
+- 硬编码文章 → 原有渲染方式
+
+## 📝 最佳实践
+
+### 内容组织
+1. **使用清晰的标题结构**
+2. **保持段落简短易读**
+3. **适当使用列表和引用**
+4. **添加相关图片增强视觉效果**
+
+### 文件管理
+1. **使用描述性的文件名**
+2. **保持文件结构整洁**
+3. **定期备份重要内容**
+4. **使用版本控制管理内容**
+
+### 性能优化
+1. **压缩图片文件**
+2. **使用合适的图片格式**
+3. **避免过大的文件**
+4. **合理使用标签分类**
+
+## 🚀 快速开始
+
+### 创建新文章
+1. 在 `content/posts/` 目录中创建新文件
+2. 添加前置元数据
+3. 编写文章内容
+4. 保存文件
+5. 刷新浏览器查看效果
+
+### 示例文章
+```mdx
+---
+title: "我的第一篇文章"
+date: "2025年1月21日"
+excerpt: "这是我的第一篇文章，介绍如何使用MDX编写内容。"
+image: "https://images.pexels.com/photos/1367192/pexels-photo-1367192.jpeg"
+tags: ["教程", "MDX", "博客"]
+---
+
+# 我的第一篇文章
+
+欢迎来到我的博客！这是使用 MDX 格式编写的第一篇文章。
+
+## 为什么选择 MDX？
+
+MDX 让我可以在 Markdown 中使用 React 组件，这为我的博客带来了无限的可能性。
+
+### 主要优势
+
+- **灵活性**: 可以混合使用 Markdown 和 React 组件
+- **可扩展性**: 轻松添加交互式内容
+- **一致性**: 与现有的 React 生态系统完美集成
+
+## 代码示例
+
+```javascript
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+
+console.log(greet('World'));
+```
+
+## 总结
+
+MDX 是一个强大的工具，让我能够创建丰富而有趣的博客内容。
+
+---
+
+*感谢阅读我的第一篇文章！*
+```
+
+## 🔍 故障排除
 
 ### 常见问题
 
-1. **构建错误**：确保 MDX 文件语法正确
-2. **样式问题**：检查 Tailwind CSS 类名
-3. **图片不显示**：验证图片 URL 可访问性
+1. **文章不显示**
+   - 检查文件名是否正确
+   - 确认前置元数据格式正确
+   - 验证文件保存在正确目录
+
+2. **样式不正确**
+   - 检查 Markdown 语法
+   - 确认组件导入正确
+   - 查看浏览器控制台错误
+
+3. **图片不显示**
+   - 检查图片URL是否有效
+   - 确认图片格式支持
+   - 验证网络连接
 
 ### 调试技巧
+- 使用浏览器开发者工具检查元素
+- 查看控制台错误信息
+- 检查文件语法是否正确
+- 验证前置元数据格式
 
-- 使用 `npm run dev` 启动开发服务器
-- 检查浏览器控制台错误信息
-- 验证 MDX 文件语法
+## 📚 更多资源
 
-## 未来扩展
-
-- 支持更多 MDX 插件
-- 添加文章分类功能
-- 实现搜索功能
-- 支持评论系统
+- [MDX 官方文档](https://mdxjs.com/)
+- [Markdown 语法指南](https://www.markdownguide.org/)
+- [Next.js MDX 集成](https://nextjs.org/docs/advanced-features/using-mdx)
+- [React Markdown 文档](https://github.com/remarkjs/react-markdown)
 
 ---
 
-通过 MDX 支持，您现在可以更灵活地创建和编辑文章内容，同时保持项目的整体设计风格和用户体验。 
+*Happy Writing! 🎉* 
