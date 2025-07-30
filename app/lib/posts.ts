@@ -354,7 +354,4 @@ export function getAllPosts(): Post[] {
 export function getPostBySlug(slug: string): Post | undefined {
   const allPosts = getAllPosts();
   return allPosts.find(post => post.slug === slug);
-}
-
-// 导出所有文章
-export const posts = getAllPosts(); 
+} 
