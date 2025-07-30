@@ -1,6 +1,7 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import OrigamiBackground from '../components/OrigamiBackground';
+import FireflyBackground from '../components/FireflyBackground';
 import { getAllPosts } from '../lib/posts';
 import Link from 'next/link';
 
@@ -11,6 +12,8 @@ export default async function WritingsPage() {
   return (
     <>
       <OrigamiBackground />
+      {/* 萤火虫背景动画 - 仅在深色模式 */}
+      <FireflyBackground />
       <div className="container mx-auto max-w-6xl px-4 sm:px-8 relative z-10">
         <Header />
         

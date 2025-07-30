@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Footer from './Footer';
 import PostCard from './PostCard';
+import FireflyBackground from './FireflyBackground';
 import { Post } from '../lib/posts';
 
 // Custom hook for typewriter effect
@@ -81,6 +82,9 @@ export default function HomeClient({ posts }: HomeClientProps) {
 
   return (
     <main>
+      {/* 萤火虫背景动画 - 仅在深色模式 */}
+      <FireflyBackground />
+      
       {/* Hero Section - Full Screen */}
       <div className="preview relative h-screen">
         <div 
@@ -190,7 +194,7 @@ export default function HomeClient({ posts }: HomeClientProps) {
       </div>
 
       {/* Posts Container */}
-      <div className="container mx-auto max-w-6xl px-4 sm:px-8" id="container">
+      <div className="container mx-auto max-w-6xl px-4 sm:px-8 relative z-10" id="container">
         {/* Posts Grid */}
         <section className="row py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
