@@ -43,15 +43,15 @@ export default function GlobalLoader({ children }: GlobalLoaderProps) {
     <>
       {/* 全局加载层 */}
       {!isFullyLoaded && (
-        <div className="fixed inset-0 z-50 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="fixed inset-0 z-50 bg-background flex items-center justify-center">
           <div className="text-center">
             {/* SVG动画 */}
             <svg className="w-32 h-32 mx-auto mb-8" viewBox="0 0 120 100">
               <defs>
                 <linearGradient id="shimmer-gradient">
-                  <stop offset="0%" stopColor="rgba(255, 255, 255, 0)" />
-                  <stop offset="50%" stopColor="rgba(255, 255, 255, 0.5)" />
-                  <stop offset="100%" stopColor="rgba(255, 255, 255, 0)" />
+                  <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0" />
+                  <stop offset="50%" stopColor="var(--color-primary)" stopOpacity="0.6" />
+                  <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0" />
                 </linearGradient>
                 <clipPath id="icons-clip">
                   <path d="M25 70 L45 40 L58 60 L75 30 L95 70 Z" />
@@ -63,13 +63,14 @@ export default function GlobalLoader({ children }: GlobalLoaderProps) {
                 <rect 
                   id="frame" 
                   x="1" y="1" width="118" height="98" rx="8"
-                  stroke="#d9d9d9"
+                  stroke="currentColor"
                   strokeWidth="2"
                   fill="none"
                   strokeDasharray="520"
                   strokeDashoffset="520"
                   style={{
-                    animation: 'draw-frame 1.5s ease-out forwards'
+                    animation: 'draw-frame 1.5s ease-out forwards',
+                    color: 'var(--color-muted-foreground)'
                   }}
                 />
                 
@@ -80,9 +81,9 @@ export default function GlobalLoader({ children }: GlobalLoaderProps) {
                     animation: 'fade-in-icons 1s ease 1s forwards'
                   }}
                 >
-                  <path d="M25 70 L45 40 L58 60 L75 30 L95 70 Z" fill="#e0e0e0" />
-                  <circle cx="78" cy="25" r="4" fill="#e0e0e0" />
-                  <path d="M48 48 L62 58 L48 68 Z" fill="#e0e0e0" />
+                  <path d="M25 70 L45 40 L58 60 L75 30 L95 70 Z" fill="var(--color-muted-foreground)" />
+                  <circle cx="78" cy="25" r="4" fill="var(--color-muted-foreground)" />
+                  <path d="M48 48 L62 58 L48 68 Z" fill="var(--color-muted-foreground)" />
                 </g>
 
                 <rect 
@@ -99,13 +100,13 @@ export default function GlobalLoader({ children }: GlobalLoaderProps) {
                   <rect 
                     id="progress-bar-track" 
                     width="100" height="4" rx="2"
-                    fill="#e9e9e9"
+                    fill="var(--color-muted)"
                   />
                   <svg width="100" height="4" x="0" y="0">
                     <rect 
                       id="progress-bar-fill" 
                       width="100" height="4" rx="2"
-                      fill="#b0b0b0"
+                      fill="var(--color-muted-foreground)"
                       style={{
                         animation: 'progress-move 2s ease-in-out infinite 2s'
                       }}
@@ -115,7 +116,7 @@ export default function GlobalLoader({ children }: GlobalLoaderProps) {
               </g>
             </svg>
             
-            <div className="text-white/80 text-lg font-light tracking-wider">
+            <div className="text-foreground/80 text-lg font-light tracking-wider">
               <span className="inline-block animate-fade-in">正在加载</span>
               <span className="inline-block animate-bounce delay-100">.</span>
               <span className="inline-block animate-bounce delay-200">.</span>
