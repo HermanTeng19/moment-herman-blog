@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useTheme } from 'next-themes';
 
 interface Bird {
   x: number;
@@ -27,11 +28,17 @@ export default function OrigamiBackground() {
   const birdsRef = useRef<Bird[]>([]);
   const mouseRef = useRef<Mouse>({ x: null, y: null, radius: 150 });
   const animationRef = useRef<number | undefined>(undefined);
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // 确保组件只在客户端渲染
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // 根据主题调整颜色
   const getColors = () => {
-    const isDark = document.documentElement.classList.contains('dark');
-    return isDark 
+    return theme === 'dark'
       ? ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57'] // 深色主题颜色
       : ['#ff7979', '#badc58', '#f9ca24', '#7ed6df', '#e056fd']; // 浅色主题颜色
   };
@@ -40,7 +47,7 @@ export default function OrigamiBackground() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || theme !== 'light' || !mounted) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -112,8 +119,7 @@ export default function OrigamiBackground() {
         context.lineTo(-this.size * 0.6, 0);
         context.lineTo(this.size * 0.3, 0); // Head
         context.lineTo(-this.size * 0.6, 0);
-        const isDark = document.documentElement.classList.contains('dark');
-        context.strokeStyle = isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)';
+        context.strokeStyle = 'rgba(0,0,0,0.3)';
         context.stroke();
 
         context.restore();
@@ -179,7 +185,10 @@ export default function OrigamiBackground() {
       window.removeEventListener('mouseout', handleMouseOut);
       window.removeEventListener('click', handleClick);
     };
-  }, []);
+  }, [theme, mounted]);
+
+  // 只在客户端且浅色模式下显示
+  if (!mounted || theme !== 'light') return null;
 
   return (
     <canvas
