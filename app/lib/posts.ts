@@ -8,6 +8,20 @@ export interface Post {
   slug: string;
 }
 
+// 解析中文日期格式的函数
+function parseChineseDate(dateStr: string): Date {
+  // 处理 "2024年12月11日" 和 "2024年12.18日" 格式
+  const match = dateStr.match(/(\d{4})年(\d{1,2})[月\.](\d{1,2})日/);
+  if (match) {
+    const [, year, month, day] = match;
+    return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+  }
+  
+  // 如果无法解析，返回一个很早的日期
+  console.warn(`无法解析日期格式: ${dateStr}`);
+  return new Date(1900, 0, 1);
+}
+
 export const posts: Post[] = [
   {
     id: '12',
@@ -262,5 +276,9 @@ export function getPostBySlug(slug: string): Post | undefined {
 }
 
 export function getAllPosts(): Post[] {
-  return posts;
+  return posts.sort((a, b) => {
+    const dateA = parseChineseDate(a.date);
+    const dateB = parseChineseDate(b.date);
+    return dateB.getTime() - dateA.getTime();
+  });
 } 

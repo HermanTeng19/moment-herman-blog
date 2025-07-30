@@ -11,6 +11,20 @@ export interface MarkdownPost extends Post {
   };
 }
 
+// 解析中文日期格式的函数
+function parseChineseDate(dateStr: string): Date {
+  // 处理 "2024年12月11日" 和 "2024年12.18日" 格式
+  const match = dateStr.match(/(\d{4})年(\d{1,2})[月\.](\d{1,2})日/);
+  if (match) {
+    const [, year, month, day] = match;
+    return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+  }
+  
+  // 如果无法解析，返回一个很早的日期
+  console.warn(`无法解析日期格式: ${dateStr}`);
+  return new Date(1900, 0, 1);
+}
+
 // 服务器端函数 - 支持 .md 和 .mdx 文件
 export async function getMarkdownPostBySlug(slug: string): Promise<MarkdownPost | null> {
   try {
@@ -89,7 +103,11 @@ export async function getAllMarkdownPosts(): Promise<MarkdownPost[]> {
           },
         };
       })
-      .sort((a: MarkdownPost, b: MarkdownPost) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      .sort((a: MarkdownPost, b: MarkdownPost) => {
+        const dateA = parseChineseDate(a.date);
+        const dateB = parseChineseDate(b.date);
+        return dateB.getTime() - dateA.getTime();
+      });
 
     return allPostsData;
   } catch (error) {
