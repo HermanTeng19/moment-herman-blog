@@ -1,4 +1,10 @@
 import React from 'react';
+import GameRating from './GameRating';
+import CombatDemo, { Skill } from './CombatDemo';
+import CharacterCard from './CharacterCard';
+import BattleReplay, { BattleScene } from './BattleReplay';
+import TeamSpirit, { Member } from './TeamSpirit';
+import GameStats, { Stat } from './GameStats';
 
 interface MDXComponentsProps {
   children: React.ReactNode;
@@ -141,6 +147,18 @@ const MDXComponents = {
       {children}
     </em>
   ),
+
+  // 游戏相关组件
+  GameRating,
+  CombatDemo,
+  Skill,
+  CharacterCard,
+  BattleReplay,
+  BattleScene,
+  TeamSpirit,
+  Member,
+  GameStats,
+  Stat,
 };
 
 export default MDXComponents; 

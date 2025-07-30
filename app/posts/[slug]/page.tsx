@@ -6,6 +6,8 @@ import MDXComponents from '../../components/MDXComponents';
 import MarkdownRenderer from '../../components/MarkdownRenderer';
 import { getPostBySlug, getAllPosts } from '../../lib/posts';
 import { getMarkdownPostBySlug, getAllMarkdownPosts } from '../../lib/mdx';
+import fs from 'fs';
+import path from 'path';
 
 interface PostPageProps {
   params: Promise<{
@@ -42,8 +44,12 @@ export default async function PostPage({ params }: PostPageProps) {
   }
 
   // 检查文件扩展名以决定渲染方式
-  const isMDX = markdownPost && slug.includes('.mdx');
-  const isMarkdown = markdownPost && !isMDX;
+  const postsDirectory = process.cwd() + '/content/posts';
+  const mdxPath = path.join(postsDirectory, `${slug}.mdx`);
+  const mdPath = path.join(postsDirectory, `${slug}.md`);
+  
+  const isMDX = markdownPost && fs.existsSync(mdxPath);
+  const isMarkdown = markdownPost && !isMDX && fs.existsSync(mdPath);
 
   return (
     <div className="container mx-auto max-w-6xl px-4 sm:px-8">

@@ -1,10 +1,18 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { getAllPosts } from '../lib/posts';
+import { getAllMarkdownPosts } from '../lib/mdx';
 import Link from 'next/link';
 
-export default function WritingsPage() {
-  const posts = getAllPosts();
+export default async function WritingsPage() {
+  // 获取所有文章（硬编码 + Markdown）
+  const hardcodedPosts = getAllPosts();
+  const markdownPosts = await getAllMarkdownPosts();
+  
+  // 合并并排序所有文章
+  const posts = [...hardcodedPosts, ...markdownPosts].sort((a, b) => 
+    new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
 
   return (
     <div className="container mx-auto max-w-6xl px-4 sm:px-8">
