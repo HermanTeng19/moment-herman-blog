@@ -4,24 +4,29 @@ A minimalist personal blog website built with Next.js, featuring a wabi-sabi aes
 
 ## 🌟 Features
 
-- **Wabi-Sabi Design**: Embracing imperfection and finding beauty in simplicity
-- **Chinese Typography**: Beautiful Noto Sans SC and Noto Serif SC fonts
-- **Responsive Layout**: Mobile-first design that works on all devices
-- **Blog Posts**: Dynamic blog post pages with rich content
-- **MDX & Markdown Support**: Write content in `.mdx` or `.md` format with full frontmatter support
-- **Gallery**: Masonry-style photo gallery
-- **Timeline**: Elegant timeline layout for blog posts
-- **Smooth Animations**: Subtle hover effects and page transitions
+- **🌙 Dark Mode Support**: Seamless light/dark theme switching with system preference detection
+- **🎨 Wabi-Sabi Design**: Embracing imperfection and finding beauty in simplicity
+- **📝 Chinese Typography**: Beautiful Noto Sans SC and Noto Serif SC fonts
+- **📱 Responsive Layout**: Mobile-first design that works on all devices
+- **📄 Blog Posts**: Dynamic blog post pages with rich content
+- **📚 MDX & Markdown Support**: Write content in `.mdx` or `.md` format with full frontmatter support
+- **🖼️ Gallery**: Masonry-style photo gallery
+- **📅 Timeline**: Elegant timeline layout for blog posts
+- **✨ Smooth Animations**: Subtle hover effects and page transitions
+- **🎭 Dynamic Backgrounds**: Theme-specific canvas animations (Origami birds for light mode, Fireflies for dark mode)
+- **⏳ Loading Experience**: Full-screen loading animation with SVG effects
+- **🏷️ Tag System**: Organize posts with tags for better categorization
+- **🎯 Enhanced Contrast**: Optimized text contrast for both light and dark themes
 
 ## 🎨 Design Philosophy
 
 This blog embodies the Japanese aesthetic of wabi-sabi (侘寂), which finds beauty in imperfection, impermanence, and incompleteness. The design features:
 
-- Warm, muted color palette with stone tones
-- Minimalist typography with careful spacing
-- Subtle shadows and rounded corners
-- Imperfect underlines on hover effects
-- Contemplative imagery and thoughtful content
+- **Dual Theme System**: Warm light mode and contemplative dark mode
+- **Dynamic Color Palette**: CSS variables for seamless theme switching
+- **Minimalist Typography**: Careful spacing and hierarchy
+- **Subtle Animations**: Canvas-based background effects and smooth transitions
+- **Imperfect Elements**: Hand-drawn style underlines and organic shapes
 
 ## 🚀 Getting Started
 
@@ -55,14 +60,19 @@ npm run dev
 ```
 app/
 ├── components/          # Reusable UI components
-│   ├── Header.tsx      # Navigation header
+│   ├── Header.tsx      # Navigation header with theme toggle
 │   ├── Footer.tsx      # Site footer
 │   ├── PostCard.tsx    # Blog post preview card
-│   ├── MDXComponents.tsx # Custom MDX components
+│   ├── MDXComponents.tsx # Custom MDX components with theme-aware styling
 │   ├── MarkdownRenderer.tsx # Markdown rendering component
-│   └── HomeClient.tsx  # Client-side home page logic
+│   ├── HomeClient.tsx  # Client-side home page logic
+│   ├── ThemeToggle.tsx # Dark/light mode toggle button
+│   ├── ThemeProvider.tsx # Next-themes provider wrapper
+│   ├── GlobalLoader.tsx # Full-screen loading animation
+│   ├── OrigamiBackground.tsx # Light mode canvas animation
+│   └── FireflyBackground.tsx # Dark mode canvas animation
 ├── lib/
-│   ├── posts.ts        # Hardcoded blog post data
+│   ├── posts.ts        # Blog post data management (filesystem + hardcoded)
 │   └── mdx.ts          # MDX/Markdown file processing
 ├── content/
 │   └── posts/          # MDX and Markdown files
@@ -70,35 +80,57 @@ app/
 ├── gallery/            # Photo gallery page
 ├── about/              # About page
 ├── posts/[slug]/       # Individual blog post pages
-├── layout.tsx          # Root layout with fonts and metadata
+├── layout.tsx          # Root layout with theme provider and global loader
 ├── page.tsx            # Home page
-└── globals.css         # Global styles and animations
+└── globals.css         # Global styles, animations, and CSS variables
 ```
 
 ## 🎯 Pages
 
-- **Home** (`/`): Hero section with latest blog posts
-- **Writings** (`/writings`): Timeline view of all blog posts
+- **Home** (`/`): Hero section with latest blog posts and dynamic backgrounds
+- **Writings** (`/writings`): Timeline view of all blog posts with enhanced hover effects
 - **Gallery** (`/gallery`): Masonry-style photo gallery
 - **About** (`/about`): Personal introduction
-- **Blog Posts** (`/posts/[slug]`): Individual blog post pages
+- **Blog Posts** (`/posts/[slug]`): Individual blog post pages with optimized typography
 
 ## 🛠️ Technologies Used
 
 - **Next.js 15**: React framework with App Router
 - **TypeScript**: Type-safe development
-- **Tailwind CSS**: Utility-first CSS framework
-- **@tailwindcss/typography**: Rich text styling
+- **Tailwind CSS**: Utility-first CSS framework with dark mode support
+- **@tailwindcss/typography**: Rich text styling for markdown content
+- **next-themes**: Robust theme management with system preference detection
 - **MDX**: Markdown with JSX support
 - **react-markdown**: Markdown rendering
 - **gray-matter**: Frontmatter parsing
 - **Google Fonts**: Noto Sans SC and Noto Serif SC
+- **HTML5 Canvas**: Dynamic background animations
+
+## 🌙 Theme System
+
+### Light Mode
+- **Background**: Clean white with subtle warmth
+- **Text**: Deep charcoal for excellent readability
+- **Accents**: Muted earth tones
+- **Animation**: Origami birds floating across the canvas
+
+### Dark Mode
+- **Background**: Deep slate with purple undertones
+- **Text**: Soft white with careful contrast
+- **Accents**: Warm highlights
+- **Animation**: Interactive fireflies responding to mouse movement
+
+### Theme Switching
+- **Automatic**: Detects system preference on first visit
+- **Manual**: Click the theme toggle in the header
+- **Persistent**: Remembers user preference
+- **Smooth**: No flash of unstyled content (FOUC)
 
 ## 📝 Content Management
 
 ### Writing Blog Posts
 
-The blog supports two content formats:
+The blog supports two content formats with unified styling:
 
 #### 1. MDX Files (`.mdx`)
 MDX allows you to use React components within Markdown:
@@ -158,6 +190,7 @@ function hello() {
 - Use descriptive filenames (e.g., `my-awesome-post.mdx`)
 - The slug will be automatically generated from the filename
 - Both `.mdx` and `.md` files are supported in the same directory
+- Filesystem posts take priority over hardcoded posts
 
 ### Frontmatter
 
@@ -167,7 +200,7 @@ All content files support the following frontmatter fields:
 - `date` (required): Publication date
 - `excerpt` (required): Post summary
 - `image` (optional): Featured image URL
-- `tags` (optional): Array of tags
+- `tags` (optional): Array of tags for categorization
 
 ### Supported Markdown Features
 
@@ -176,10 +209,10 @@ Both MDX and Markdown files support:
 - **Headings**: `# H1`, `## H2`, `### H3`
 - **Text Formatting**: **bold**, *italic*, `code`
 - **Lists**: Ordered and unordered lists
-- **Links**: `[text](url)`
-- **Images**: `![alt](url)`
-- **Blockquotes**: `> quote`
-- **Code Blocks**: ```javascript ... ```
+- **Links**: `[text](url)` with hover effects
+- **Images**: `![alt](url)` with responsive sizing
+- **Blockquotes**: `> quote` with styled borders
+- **Code Blocks**: ```javascript ... ``` with syntax highlighting
 - **Horizontal Rules**: `---`
 
 ### MDX Additional Features
@@ -192,15 +225,31 @@ MDX files also support:
 
 ## 🎨 Customization
 
-### Colors
-The color scheme uses warm stone tones:
-- Background: `#fdfcfb` (warm off-white)
-- Text: `#4a4a4a` (soft dark gray)
-- Accents: `#a1887f` (muted earthy color)
+### Color System
+The color scheme uses CSS variables for theme consistency:
+
+#### Light Mode Colors
+```css
+--color-background: #ffffff
+--color-foreground: #1a1a1a
+--color-card: #f8f9fa
+--color-primary: #a1887f
+--color-muted: #6c757d
+```
+
+#### Dark Mode Colors
+```css
+--color-background: #0f172a
+--color-foreground: #f1f5f9
+--color-card: #1e293b
+--color-primary: #a1887f
+--color-muted: #94a3b8
+```
 
 ### Typography
 - **Noto Sans SC**: Body text and UI elements
 - **Noto Serif SC**: Headings and titles
+- **Optimized Contrast**: Enhanced readability in both themes
 
 ### Adding Content
 
@@ -221,8 +270,26 @@ Edit `app/lib/posts.ts` to add new blog posts with the following structure:
   content: string;
   image?: string;
   slug: string;
+  tags?: string[];
 }
 ```
+
+## ✨ Animation Features
+
+### Background Animations
+- **Origami Birds** (Light Mode): Graceful paper birds floating across the canvas
+- **Fireflies** (Dark Mode): Interactive fireflies that respond to mouse movement
+- **Performance Optimized**: Limited particle count for smooth performance
+
+### Loading Experience
+- **Full-Screen Loader**: SVG-based loading animation with gradient background
+- **Asset Preloading**: Preloads critical images before revealing content
+- **Smooth Transitions**: Fade-in effects for seamless user experience
+
+### Hover Effects
+- **Article Titles**: Subtle lift and underline effects
+- **Post Cards**: Enhanced shadows and transitions
+- **Theme Toggle**: Smooth icon transitions
 
 ## 🚀 Deployment
 
@@ -232,6 +299,24 @@ The site can be deployed to Vercel, Netlify, or any other Next.js-compatible hos
 npm run build
 npm start
 ```
+
+## 🔧 Recent Updates
+
+### Latest Improvements
+- **✅ Dark Mode Implementation**: Complete theme system with next-themes
+- **✅ MDX Contrast Fix**: Enhanced text readability in light mode
+- **✅ Background Animations**: Theme-specific canvas effects
+- **✅ Loading Experience**: Full-screen loading animation
+- **✅ Tag System**: Post categorization and organization
+- **✅ Unified Styling**: Consistent color system across all components
+- **✅ Performance Optimization**: Hydration-safe theme switching
+- **✅ Enhanced Typography**: Better contrast and readability
+
+### Bug Fixes
+- **✅ Hydration Issues**: Resolved theme switching mismatches
+- **✅ Duplicate Content**: Fixed filesystem and hardcoded post merging
+- **✅ Z-index Conflicts**: Proper layering of background animations
+- **✅ Text Contrast**: Improved readability in both themes
 
 ## 📄 License
 
