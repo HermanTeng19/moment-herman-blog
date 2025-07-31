@@ -32,7 +32,9 @@ export default async function WritingsPage() {
                   <div className={`pl-10 sm:pl-0 sm:w-1/2 ${index % 2 === 0 ? 'sm:pr-8 sm:text-right' : 'sm:ml-auto sm:pl-8'}`}>
                     <p className="text-xs text-stone-400 dark:text-stone-500 tracking-widest">{post.date}</p>
                     <h3 className="font-serif text-xl mt-1 text-foreground hover:text-primary transition-colors duration-300">
-                      <Link href={`/posts/${post.slug}`}>{post.title}</Link>
+                      <Link href={`/posts/${post.slug}`} className="writings-title-hover">
+                        {post.title}
+                      </Link>
                     </h3>
                   </div>
                 </div>

@@ -397,3 +397,37 @@ h1, h2, h3, h4, .font-serif {
     --color-ring: #a1887f;
   }
 }
+
+/* 新增：随笔页面文章标题悬停动画效果 */
+.writings-title-hover {
+  position: relative;
+  transition: all 0.3s ease;
+  padding: 2px 4px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.writings-title-hover:hover {
+  transform: translateY(-1px);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.writings-title-hover::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 4px;
+  background-color: var(--color-primary);
+  transition: width 0.3s ease;
+}
+
+.writings-title-hover:hover::after {
+  width: calc(100% - 8px);
+}
+
+/* 深色模式下调整效果 */
+.dark .writings-title-hover:hover {
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
