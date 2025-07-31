@@ -19,7 +19,7 @@ export default async function WritingsPage() {
         
         <main>
           <section className="py-16 sm:py-24">
-            <h1 className="font-serif text-4xl text-center mb-16 tracking-widest text-stone-800 dark:text-stone-200">
+            <h1 className="font-serif text-4xl text-center mb-16 tracking-widest text-foreground">
               所有随笔
             </h1>
             <div className="relative max-w-2xl mx-auto">
@@ -31,7 +31,7 @@ export default async function WritingsPage() {
                   <div className="absolute left-4 sm:left-1/2 top-2 -ml-px w-2 h-2 rounded-full bg-stone-400 dark:bg-stone-500"></div>
                   <div className={`pl-10 sm:pl-0 sm:w-1/2 ${index % 2 === 0 ? 'sm:pr-8 sm:text-right' : 'sm:ml-auto sm:pl-8'}`}>
                     <p className="text-xs text-stone-400 dark:text-stone-500 tracking-widest">{post.date}</p>
-                    <h3 className="font-serif text-xl mt-1 text-stone-800 dark:text-stone-200 hover:text-stone-500 dark:hover:text-stone-300 transition-colors duration-300">
+                    <h3 className="font-serif text-xl mt-1 text-foreground hover:text-primary transition-colors duration-300">
                       <Link href={`/posts/${post.slug}`}>{post.title}</Link>
                     </h3>
                   </div>
