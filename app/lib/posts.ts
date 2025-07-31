@@ -382,10 +382,10 @@ export function getAllPosts(): Post[] {
     console.error('读取文章时出错:', error);
     // 如果读取文件系统失败，返回硬编码文章
     return hardcodedPosts.sort((a, b) => {
-      const dateA = parseChineseDate(a.date);
-      const dateB = parseChineseDate(b.date);
-      return dateB.getTime() - dateA.getTime();
-    });
+    const dateA = parseChineseDate(a.date);
+    const dateB = parseChineseDate(b.date);
+    return dateB.getTime() - dateA.getTime();
+  });
   }
 }
 

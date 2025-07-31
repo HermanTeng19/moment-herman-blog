@@ -34,25 +34,25 @@ export default function Header() {
     }`}>
       <div className="container mx-auto max-w-6xl px-4 sm:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link 
-            href="/" 
+        <Link 
+          href="/" 
             className={`font-serif text-xl sm:text-2xl tracking-widest transition-colors duration-300 hover:text-primary ${
               isScrolled ? 'text-foreground' : 'text-white'
             }`}
-          >
-            云舒亭
-          </Link>
-          
+        >
+          云舒亭
+        </Link>
+        
           <nav className="hidden md:flex items-center space-x-6 sm:space-x-10 text-sm tracking-wider">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`nav-link transition-colors duration-300 ${
-                    pathname === item.href 
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`nav-link transition-colors duration-300 ${
+                  pathname === item.href 
                       ? (isScrolled ? 'text-foreground' : 'text-white') 
                       : (isScrolled ? 'text-muted-foreground hover:text-foreground' : 'text-white/80 hover:text-white')
-                  }`}
+                }`}
               >
                 {item.label}
               </Link>
@@ -62,11 +62,11 @@ export default function Header() {
           <div className="flex items-center space-x-4">
             <ThemeToggle />
             
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden p-2 rounded-lg bg-background/80 backdrop-blur-md border border-border"
               aria-label="切换菜单"
-            >
+          >
               <svg
                 className="w-5 h-5 text-foreground"
                 fill="none"
@@ -88,8 +88,8 @@ export default function Header() {
                     d="M4 6h16M4 12h16M4 18h16"
                   />
                 )}
-              </svg>
-            </button>
+            </svg>
+          </button>
           </div>
         </div>
 
@@ -105,12 +105,12 @@ export default function Header() {
                     pathname === item.href 
                       ? 'text-foreground bg-accent' 
                       : 'text-muted-foreground hover:text-foreground hover:bg-accent'
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
           </div>
         )}
       </div>

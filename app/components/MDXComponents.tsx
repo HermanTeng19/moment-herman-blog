@@ -14,7 +14,7 @@ interface MDXComponentsProps {
 const MDXComponents = {
   h1: ({ children, ...props }: MDXComponentsProps) => (
     <h1 
-      className="font-serif text-3xl sm:text-4xl mt-8 mb-6 leading-tight text-stone-800 dark:text-stone-200" 
+      className="font-serif text-3xl sm:text-4xl mt-8 mb-6 leading-tight text-foreground" 
       {...props}
     >
       {children}
@@ -23,7 +23,7 @@ const MDXComponents = {
   
   h2: ({ children, ...props }: MDXComponentsProps) => (
     <h2 
-      className="font-serif text-2xl sm:text-3xl mt-8 mb-4 leading-tight text-stone-800 dark:text-stone-200" 
+      className="font-serif text-2xl sm:text-3xl mt-8 mb-4 leading-tight text-foreground" 
       {...props}
     >
       {children}
@@ -32,7 +32,7 @@ const MDXComponents = {
   
   h3: ({ children, ...props }: MDXComponentsProps) => (
     <h3 
-      className="font-serif text-xl sm:text-2xl mt-6 mb-3 leading-tight text-stone-800 dark:text-stone-200" 
+      className="font-serif text-xl sm:text-2xl mt-6 mb-3 leading-tight text-foreground" 
       {...props}
     >
       {children}
@@ -41,7 +41,7 @@ const MDXComponents = {
   
   p: ({ children, ...props }: MDXComponentsProps) => (
     <p 
-      className="mb-4 text-stone-700 dark:text-stone-300 leading-relaxed" 
+      className="mb-4 text-foreground leading-relaxed" 
       {...props}
     >
       {children}
@@ -50,7 +50,7 @@ const MDXComponents = {
   
   ul: ({ children, ...props }: MDXComponentsProps) => (
     <ul 
-      className="mb-4 pl-6 space-y-2 text-stone-700 dark:text-stone-300" 
+      className="mb-4 pl-6 space-y-2 text-foreground" 
       {...props}
     >
       {children}
@@ -59,7 +59,7 @@ const MDXComponents = {
   
   ol: ({ children, ...props }: MDXComponentsProps) => (
     <ol 
-      className="mb-4 pl-6 space-y-2 text-stone-700 dark:text-stone-300" 
+      className="mb-4 pl-6 space-y-2 text-foreground" 
       {...props}
     >
       {children}
@@ -68,7 +68,7 @@ const MDXComponents = {
   
   li: ({ children, ...props }: MDXComponentsProps) => (
     <li 
-      className="text-stone-700 dark:text-stone-300" 
+      className="text-foreground" 
       {...props}
     >
       {children}
@@ -77,7 +77,7 @@ const MDXComponents = {
   
   blockquote: ({ children, ...props }: MDXComponentsProps) => (
     <blockquote 
-      className="border-l-4 border-stone-300 dark:border-stone-600 pl-4 my-6 italic text-stone-600 dark:text-stone-400" 
+      className="border-l-4 border-muted-foreground pl-4 my-6 italic text-muted-foreground" 
       {...props}
     >
       {children}
@@ -86,7 +86,7 @@ const MDXComponents = {
   
   code: ({ children, ...props }: MDXComponentsProps) => (
     <code 
-      className="bg-stone-100 dark:bg-dark-700 px-2 py-1 rounded text-sm font-mono text-stone-800 dark:text-stone-200" 
+      className="bg-muted px-2 py-1 rounded text-sm font-mono text-foreground" 
       {...props}
     >
       {children}
@@ -95,7 +95,7 @@ const MDXComponents = {
   
   pre: ({ children, ...props }: MDXComponentsProps) => (
     <pre 
-      className="bg-stone-100 dark:bg-dark-700 p-4 rounded-lg overflow-x-auto my-6" 
+      className="bg-muted p-4 rounded-lg overflow-x-auto my-6" 
       {...props}
     >
       {children}
@@ -105,7 +105,7 @@ const MDXComponents = {
   a: ({ children, href, ...props }: MDXComponentsProps & { href?: string }) => (
     <a 
       href={href}
-      className="text-stone-600 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 underline transition-colors" 
+      className="text-primary hover:text-primary/80 underline transition-colors" 
       {...props}
     >
       {children}
@@ -117,7 +117,7 @@ const MDXComponents = {
       <img 
         src={src}
         alt={alt || ''}
-        className="w-full h-auto rounded-sm shadow-sm shadow-stone-200 dark:shadow-dark-800" 
+        className="w-full h-auto rounded-sm shadow-sm" 
         {...props}
       />
     </div>
@@ -125,14 +125,14 @@ const MDXComponents = {
   
   hr: ({ ...props }: MDXComponentsProps) => (
     <hr 
-      className="border-stone-300 dark:border-stone-600 my-8" 
+      className="border-muted-foreground my-8" 
       {...props}
     />
   ),
   
   strong: ({ children, ...props }: MDXComponentsProps) => (
     <strong 
-      className="font-semibold text-stone-800 dark:text-stone-200" 
+      className="font-semibold text-foreground" 
       {...props}
     >
       {children}
@@ -141,7 +141,7 @@ const MDXComponents = {
   
   em: ({ children, ...props }: MDXComponentsProps) => (
     <em 
-      className="italic text-stone-700 dark:text-stone-300" 
+      className="italic text-foreground" 
       {...props}
     >
       {children}

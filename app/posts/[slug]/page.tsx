@@ -30,8 +30,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               <div className="mb-8">
                 <p className="text-sm text-muted-foreground tracking-widest">{post.date}</p>
                 <h1 className="font-serif text-3xl sm:text-4xl mt-4 leading-tight text-foreground">
-                  {post.title}
-                </h1>
+              {post.title}
+            </h1>
                 {post.tags && (
                   <div className="flex flex-wrap gap-2 mt-4">
                     {post.tags.map((tag, index) => (
@@ -46,26 +46,26 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 )}
               </div>
               
-              {post.image && (
-                <img 
-                  src={post.image} 
-                  alt="" 
+            {post.image && (
+              <img 
+                src={post.image} 
+                alt="" 
                   className="w-full h-auto object-cover rounded-sm my-8 sm:my-12 shadow-sm"
-                />
-              )}
+              />
+            )}
               
               <div className="mt-8">
                 {post.content.includes('---') && !post.content.includes('<p>') ? (
                   // 如果是MDX内容（包含frontmatter但不包含HTML标签），使用MDXRemote渲染
-                  <MDXRemote 
-                    source={post.content} 
-                    components={MDXComponents}
-                  />
+                <MDXRemote 
+                  source={post.content} 
+                  components={MDXComponents}
+                />
                 ) : (
                   // 如果是HTML内容或普通文本，直接显示
                   <div dangerouslySetInnerHTML={{ __html: post.content }} />
-                )}
-              </div>
+              )}
+            </div>
             </article>
           </div>
         </section>

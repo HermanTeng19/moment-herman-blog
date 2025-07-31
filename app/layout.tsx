@@ -33,7 +33,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <GlobalLoader>
-            {children}
+        {children}
           </GlobalLoader>
         </ThemeProvider>
       </body>
