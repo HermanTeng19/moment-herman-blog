@@ -431,3 +431,138 @@ h1, h2, h3, h4, .font-serif {
 .dark .writings-title-hover:hover {
   text-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
 }
+
+/* 代码块样式增强 - 专门针对浅色模式优化 */
+.prose pre {
+  background-color: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+  color: #1e293b !important;
+}
+
+.prose code {
+  background-color: #f1f5f9 !important;
+  color: #1e293b !important;
+  border: 1px solid #cbd5e1 !important;
+  padding: 0.125rem 0.375rem !important;
+  border-radius: 0.25rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+}
+
+/* 代码块内的代码样式 */
+.prose pre code {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  color: inherit !important;
+  font-weight: normal !important;
+}
+
+/* 代码块滚动条样式 */
+.prose pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+.prose pre::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.prose pre::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.prose pre::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* 浅色模式下的语法高亮优化 */
+.prose pre .token.comment {
+  color: #6b7280 !important;
+}
+
+.prose pre .token.keyword {
+  color: #dc2626 !important;
+  font-weight: 600 !important;
+}
+
+.prose pre .token.string {
+  color: #059669 !important;
+}
+
+.prose pre .token.number {
+  color: #7c3aed !important;
+}
+
+.prose pre .token.boolean {
+  color: #dc2626 !important;
+  font-weight: 600 !important;
+}
+
+.prose pre .token.function {
+  color: #2563eb !important;
+}
+
+.prose pre .token.class-name {
+  color: #d97706 !important;
+}
+
+/* 深色模式下的代码块样式增强 */
+.dark .prose pre {
+  background-color: #1e293b !important;
+  border: 1px solid #475569 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3) !important;
+  color: #f8fafc !important;
+}
+
+.dark .prose code {
+  background-color: transparent !important;
+  color: #f1f5f9 !important;
+  border: none !important;
+}
+
+/* 深色模式下的滚动条样式 */
+.dark .prose pre::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+.dark .prose pre::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+.dark .prose pre::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* 深色模式下的语法高亮优化 */
+.dark .prose pre .token.comment {
+  color: #94a3b8 !important;
+}
+
+.dark .prose pre .token.keyword {
+  color: #fca5a5 !important;
+  font-weight: 600 !important;
+}
+
+.dark .prose pre .token.string {
+  color: #86efac !important;
+}
+
+.dark .prose pre .token.number {
+  color: #c4b5fd !important;
+}
+
+.dark .prose pre .token.boolean {
+  color: #fca5a5 !important;
+  font-weight: 600 !important;
+}
+
+.dark .prose pre .token.function {
+  color: #93c5fd !important;
+}
+
+.dark .prose pre .token.class-name {
+  color: #fbbf24 !important;
+}

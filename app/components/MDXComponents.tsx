@@ -86,7 +86,7 @@ const MDXComponents = {
   
   code: ({ children, ...props }: MDXComponentsProps) => (
     <code 
-      className="bg-muted px-2 py-1 rounded text-sm font-mono text-foreground" 
+      className="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm font-mono text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700" 
       {...props}
     >
       {children}
@@ -95,7 +95,7 @@ const MDXComponents = {
   
   pre: ({ children, ...props }: MDXComponentsProps) => (
     <pre 
-      className="bg-muted p-4 rounded-lg overflow-x-auto my-6" 
+      className="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto my-6 border border-gray-200 dark:border-gray-700 shadow-sm" 
       {...props}
     >
       {children}
