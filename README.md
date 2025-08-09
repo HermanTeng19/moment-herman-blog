@@ -89,6 +89,7 @@ app/
 
 - **Home** (`/`): Hero section with latest blog posts and dynamic backgrounds
 - **Writings** (`/writings`): Timeline view of all blog posts with enhanced hover effects
+- **Music** ("音乐"): External link to [music.hermanteng.net](https://music.hermanteng.net) (opens in a new tab)
 - **Gallery** (`/gallery`): Masonry-style photo gallery
 - **About** (`/about`): Personal introduction
 - **Blog Posts** (`/posts/[slug]`): Individual blog post pages with optimized typography
@@ -303,6 +304,7 @@ npm start
 ## 🔧 Recent Updates
 
 ### Latest Improvements
+- **✅ Header Navigation**: Added external "音乐" link to open [music.hermanteng.net](https://music.hermanteng.net) in a new tab
 - **✅ Dark Mode Implementation**: Complete theme system with next-themes
 - **✅ MDX Contrast Fix**: Enhanced text readability in light mode
 - **✅ Background Animations**: Theme-specific canvas effects

@@ -22,6 +22,7 @@ moment-herman-blog/
 ├── app/                          # Next.js App Router 目录
 │   ├── components/               # React 组件
 │   │   ├── Header.tsx           # 导航头部 (含主题切换)
+> 说明：`Header.tsx` 的导航项支持外部链接配置。通过在导航项对象中设置 `external: true`，即可渲染为 `<a target="_blank" rel="noopener noreferrer">` 并在新标签页打开。例如新增了“音乐”链接指向 `https://music.hermanteng.net`。
 │   │   ├── Footer.tsx           # 页面底部
 │   │   ├── PostCard.tsx         # 文章卡片组件
 │   │   ├── MDXComponents.tsx    # MDX 自定义组件 (主题感知)
