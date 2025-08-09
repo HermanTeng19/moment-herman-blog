@@ -14,6 +14,7 @@ A minimalist personal blog website built with Next.js, featuring a wabi-sabi aes
 - **📅 Timeline**: Elegant timeline layout for blog posts
 - **✨ Smooth Animations**: Subtle hover effects and page transitions
 - **🎭 Dynamic Backgrounds**: Theme-specific canvas animations (Origami birds for light mode, Fireflies for dark mode)
+ - **🌊 Hero Wave Overlay**: Theme-aware SVG waves with dark-mode color sync and layered opacity
 - **⏳ Loading Experience**: Full-screen loading animation with SVG effects
 - **🏷️ Tag System**: Organize posts with tags for better categorization
 - **🎯 Enhanced Contrast**: Optimized text contrast for both light and dark themes
@@ -120,6 +121,7 @@ app/
 - **Text**: Soft white with careful contrast
 - **Accents**: Warm highlights
 - **Animation**: Interactive fireflies responding to mouse movement
+ - **Hero Wave Overlay**: Wave overlay matches the firefly background (radial gradient base) with layered opacities for clear depth
 
 ### Theme Switching
 - **Automatic**: Detects system preference on first visit
@@ -282,6 +284,12 @@ Edit `app/lib/posts.ts` to add new blog posts with the following structure:
 - **Fireflies** (Dark Mode): Interactive fireflies that respond to mouse movement
 - **Performance Optimized**: Limited particle count for smooth performance
 
+### Hero Wave Overlay (SVG)
+- **Light Mode**: Classic white multi-layer waves
+- **Dark Mode**: Waves use the same tones as the firefly background to blend seamlessly
+- **Current opacities (top → bottom)** in dark mode: 0.95, 0.90, 0.85, 0.50
+- **Hydration-safe**: Rendering uses a mounted flag to avoid SSR hydration mismatches when reading the active theme
+
 ### Loading Experience
 - **Full-Screen Loader**: SVG-based loading animation with gradient background
 - **Asset Preloading**: Preloads critical images before revealing content
@@ -304,6 +312,7 @@ npm start
 ## 🔧 Recent Updates
 
 ### Latest Improvements
+- **✅ Hero Wave Overlay (Dark Mode)**: Sync wave colors with firefly background and increase layered opacity for better depth; hydration-safe rendering
 - **✅ Header Navigation**: Added external "音乐" link to open [music.hermanteng.net](https://music.hermanteng.net) in a new tab
 - **✅ Dark Mode Implementation**: Complete theme system with next-themes
 - **✅ MDX Contrast Fix**: Enhanced text readability in light mode

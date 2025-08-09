@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useTheme } from 'next-themes';
 import Footer from './Footer';
 import PostCard from './PostCard';
 import FireflyBackground from './FireflyBackground';
@@ -41,6 +42,8 @@ interface HomeClientProps {
 }
 
 export default function HomeClient({ posts }: HomeClientProps) {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [heroTitle, setHeroTitle] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 9; // 3x3 grid
@@ -55,6 +58,11 @@ export default function HomeClient({ posts }: HomeClientProps) {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
   const totalPages = Math.ceil(posts.length / postsPerPage);
+
+  // 确保组件只在客户端渲染后使用主题
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const fetchQuote = async () => {
@@ -110,10 +118,10 @@ export default function HomeClient({ posts }: HomeClientProps) {
                 />
               </defs>
               <g className="preview-parallax">
-                <use xlinkHref="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
-                <use xlinkHref="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
-                <use xlinkHref="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
-                <use xlinkHref="#gentle-wave" x="48" y="7" fill="#fff" />
+                <use xlinkHref="#gentle-wave" x="48" y="0" fill={mounted && theme === 'dark' ? 'rgba(9, 10, 15, 0.95)' : 'rgba(255,255,255,0.7)'} />
+                <use xlinkHref="#gentle-wave" x="48" y="3" fill={mounted && theme === 'dark' ? 'rgba(9, 10, 15, 0.90)' : 'rgba(255,255,255,0.5)'} />
+                <use xlinkHref="#gentle-wave" x="48" y="5" fill={mounted && theme === 'dark' ? 'rgba(27, 39, 53, 0.85)' : 'rgba(255,255,255,0.3)'} />
+                <use xlinkHref="#gentle-wave" x="48" y="7" fill={mounted && theme === 'dark' ? 'rgba(9, 10, 15, 0.5)' : '#fff'} />
               </g>
             </svg>
           </div>

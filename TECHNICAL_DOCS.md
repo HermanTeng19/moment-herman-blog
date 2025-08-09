@@ -274,6 +274,31 @@ export default function FireflyBackground() {
 }
 ```
 
+### 1.1 首页 Hero 波浪覆盖层（SVG）
+
+为避免 SSR 水合不匹配（Hydration Mismatch），首页 hero 的波浪覆盖层不再依赖纯 CSS `dark:` 类切换，而是：
+
+- 使用 `useTheme()` + `mounted` 标志，只在客户端挂载完成后读取主题；
+- 通过在 `<use>` 元素上直接设置 `fill` 来切换颜色与透明度；
+- 深色模式下的颜色与萤火虫背景一致（参考 `FireflyBackground` 渐变：`#090a0f`、`#1b2735`）。
+
+实现要点（节选，自 `app/components/HomeClient.tsx`）：
+
+```tsx
+const { theme } = useTheme();
+const [mounted, setMounted] = useState(false);
+useEffect(() => setMounted(true), []);
+
+<g className="preview-parallax">
+  <use xlinkHref="#gentle-wave" x="48" y="0" fill={mounted && theme === 'dark' ? 'rgba(9, 10, 15, 0.95)' : 'rgba(255,255,255,0.7)'} />
+  <use xlinkHref="#gentle-wave" x="48" y="3" fill={mounted && theme === 'dark' ? 'rgba(9, 10, 15, 0.90)' : 'rgba(255,255,255,0.5)'} />
+  <use xlinkHref="#gentle-wave" x="48" y="5" fill={mounted && theme === 'dark' ? 'rgba(27, 39, 53, 0.85)' : 'rgba(255,255,255,0.3)'} />
+  <use xlinkHref="#gentle-wave" x="48" y="7" fill={mounted && theme === 'dark' ? 'rgba(9, 10, 15, 0.5)' : '#fff'} />
+</g>
+```
+
+透明度设置（深色模式，自上而下）：`0.95`, `0.90`, `0.85`, `0.50`，保证层次清晰。
+
 ### 2. 加载动画系统
 
 #### 全局加载器
