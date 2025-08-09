@@ -80,24 +80,24 @@ export default function FireflyBackground() {
 
       update(ctx: CanvasRenderingContext2D, mouse: { x: number | null; y: number | null; radius: number }, width: number, height: number) {
         if (mouse.x !== null && mouse.y !== null) {
-          let dx = mouse.x - this.x;
-          let dy = mouse.y - this.y;
-          let distance = Math.sqrt(dx * dx + dy * dy);
-          let forceDirectionX = dx / distance;
-          let forceDirectionY = dy / distance;
-          let maxDistance = mouse.radius;
-          let force = (maxDistance - distance) / maxDistance;
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const forceDirectionX = dx / distance;
+          const forceDirectionY = dy / distance;
+          const maxDistance = mouse.radius;
+          const force = (maxDistance - distance) / maxDistance;
 
           if (distance < mouse.radius) {
             this.x -= forceDirectionX * force * 3;
             this.y -= forceDirectionY * force * 3;
           } else {
             if (this.x !== this.baseX) {
-              let dx = this.x - this.baseX;
+              const dx = this.x - this.baseX;
               this.x -= dx / 20;
             }
             if (this.y !== this.baseY) {
-              let dy = this.y - this.baseY;
+              const dy = this.y - this.baseY;
               this.y -= dy / 20;
             }
             this.angle += 0.02;
