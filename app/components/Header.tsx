@@ -6,10 +6,11 @@ import { useState, useEffect } from 'react';
 import ThemeToggle from './ThemeToggle';
 
 const navItems = [
-  { href: '/', label: '首页' },
-  { href: '/writings', label: '随笔' },
-  { href: '/gallery', label: '光影集' },
-  { href: '/about', label: '关于' },
+  { href: '/', label: '首页', external: false },
+  { href: '/writings', label: '随笔', external: false },
+  { href: 'https://music.hermanteng.net', label: '音乐', external: true },
+  { href: '/gallery', label: '光影集', external: false },
+  { href: '/about', label: '关于', external: false },
 ];
 
 export default function Header() {
@@ -44,18 +45,32 @@ export default function Header() {
         </Link>
         
           <nav className="hidden md:flex items-center space-x-6 sm:space-x-10 text-sm tracking-wider">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`nav-link transition-colors duration-300 ${
-                  pathname === item.href 
-                      ? (isScrolled ? 'text-foreground' : 'text-white') 
+            {navItems.map((item) => (
+              item.external ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`nav-link transition-colors duration-300 ${
+                    isScrolled ? 'text-muted-foreground hover:text-foreground' : 'text-white/80 hover:text-white'
+                  }`}
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`nav-link transition-colors duration-300 ${
+                    pathname === item.href
+                      ? (isScrolled ? 'text-foreground' : 'text-white')
                       : (isScrolled ? 'text-muted-foreground hover:text-foreground' : 'text-white/80 hover:text-white')
-                }`}
-              >
-                {item.label}
-              </Link>
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              )
             ))}
           </nav>
 
@@ -97,20 +112,33 @@ export default function Header() {
           <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-md shadow-lg border-b border-border">
             <nav className="flex flex-col py-4">
               {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`px-4 py-3 text-sm transition-colors duration-300 ${
-                    pathname === item.href 
-                      ? 'text-foreground bg-accent' 
-                      : 'text-muted-foreground hover:text-foreground hover:bg-accent'
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+                item.external ? (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`px-4 py-3 text-sm transition-colors duration-300 text-muted-foreground hover:text-foreground hover:bg-accent`}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`px-4 py-3 text-sm transition-colors duration-300 ${
+                      pathname === item.href
+                        ? 'text-foreground bg-accent'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                )
+              ))}
+            </nav>
           </div>
         )}
       </div>
