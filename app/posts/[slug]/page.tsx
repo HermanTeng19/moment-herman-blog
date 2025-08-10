@@ -54,18 +54,20 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               />
             )}
               
-              <div className="mt-8">
-                {post.content.includes('---') && !post.content.includes('<p>') ? (
-                  // 如果是MDX内容（包含frontmatter但不包含HTML标签），使用MDXRemote渲染
-                <MDXRemote 
-                  source={post.content} 
-                  components={MDXComponents}
-                />
-                ) : (
-                  // 如果是HTML内容或普通文本，直接显示
-                  <div dangerouslySetInnerHTML={{ __html: post.content }} />
+              {/* Excerpt as the first paragraph of content */}
+              {post.excerpt && (
+                <p className="mb-6 text-stone-700 dark:text-stone-300 leading-relaxed">
+                  {post.excerpt}
+                </p>
               )}
-            </div>
+
+              <div className="mt-8">
+                {/^\s*<p[\s>]/.test(post.content.trim()) ? (
+                  <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                ) : (
+                  <MDXRemote source={post.content} components={MDXComponents} />
+                )}
+              </div>
             </article>
           </div>
         </section>

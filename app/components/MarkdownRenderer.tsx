@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 
 interface MarkdownRendererProps {
@@ -34,14 +35,22 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
             {children}
           </h3>
         ),
-        p: ({ children, ...props }) => (
-          <p
-            className="mb-4 text-stone-700 dark:text-stone-300 leading-relaxed"
-            {...props}
-          >
-            {children}
-          </p>
-        ),
+        p: ({ children, ...props }) => {
+          const containsBlock = React.Children.toArray(children).some(
+            (child) => React.isValidElement(child) && child.type === 'div'
+          );
+          if (containsBlock) {
+            return <>{children}</>;
+          }
+          return (
+            <p
+              className="mb-4 text-stone-700 dark:text-stone-300 leading-relaxed"
+              {...props}
+            >
+              {children}
+            </p>
+          );
+        },
         ul: ({ children, ...props }) => (
           <ul
             className="mb-4 pl-6 space-y-2 text-stone-700 dark:text-stone-300"
@@ -100,14 +109,12 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
           </a>
         ),
         img: ({ src, alt, ...props }) => (
-          <div className="my-6">
-            <img
-              src={src}
-              alt={alt || ''}
-              className="w-full h-auto rounded-sm shadow-sm shadow-stone-200 dark:shadow-dark-800"
-              {...props}
-            />
-          </div>
+          <img
+            src={src}
+            alt={alt || ''}
+            className="my-6 w-full h-auto rounded-sm shadow-sm shadow-stone-200 dark:shadow-dark-800"
+            {...props}
+          />
         ),
         hr: ({ ...props }) => (
           <hr

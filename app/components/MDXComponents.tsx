@@ -113,14 +113,12 @@ const MDXComponents = {
   ),
   
   img: ({ src, alt, ...props }: MDXComponentsProps & { src?: string; alt?: string }) => (
-    <div className="my-6">
-      <img 
-        src={src}
-        alt={alt || ''}
-        className="w-full h-auto rounded-sm shadow-sm" 
-        {...props}
-      />
-    </div>
+    <img
+      src={src}
+      alt={alt || ''}
+      className="my-6 w-full h-auto rounded-sm shadow-sm"
+      {...props}
+    />
   ),
   
   hr: ({ ...props }: MDXComponentsProps) => (
